@@ -508,72 +508,6 @@ h1 {
 }
 .toast.show { opacity: 1; transform: translateY(0); }
 
-/* GOLD TYPE SELECTOR */
-.gold-type-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.gold-type-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  padding: 10px 16px 10px 12px;
-  font-family: 'Noto Serif JP', serif;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: var(--radius);
-  white-space: nowrap;
-  position: relative;
-  overflow: hidden;
-}
-.gold-type-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.05));
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.gold-type-btn:hover { border-color: var(--gold-dim); color: var(--gold-light); }
-.gold-type-btn:hover::before { opacity: 1; }
-.gold-type-btn.active {
-  border-color: var(--gold-primary);
-  color: var(--gold-pale);
-  background: rgba(201,168,76,0.08);
-  box-shadow: 0 0 16px rgba(201,168,76,0.1);
-}
-.gold-type-swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.12);
-  flex-shrink: 0;
-  box-shadow: inset 0 1px 3px rgba(255,255,255,0.25), 0 2px 6px rgba(0,0,0,0.4);
-}
-.gold-type-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: left;
-}
-.gold-type-name {
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-.gold-type-en {
-  font-family: 'Cinzel', serif;
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
-  line-height: 1;
-}
-.gold-type-btn.active .gold-type-en { color: var(--gold-dim); }
 
 @media (max-width: 1100px) { .gradient-grid { grid-template-columns: repeat(3,1fr); } }
 @media (max-width: 700px) { .gradient-grid { grid-template-columns: repeat(2,1fr); } .container { padding: 0 20px; } }
@@ -591,14 +525,15 @@ h1 {
     <div>
       <div class="section-label">雰囲気</div>
       <div class="mood-grid" id="moodGrid">
-        <button class="mood-btn active" data-mood="glamorous">ギラギラ</button>
-        <button class="mood-btn" data-mood="gorgeous">華やか</button>
+        <button class="mood-btn active" data-mood="calm">落ち着いた</button>
         <button class="mood-btn" data-mood="mature">大人っぽい</button>
-        <button class="mood-btn" data-mood="calm">落ち着いた</button>
         <button class="mood-btn" data-mood="heavy">重厚</button>
         <button class="mood-btn" data-mood="luxury">高級感</button>
         <button class="mood-btn" data-mood="elegant">上品</button>
         <button class="mood-btn" data-mood="grace">優雅</button>
+        <button class="mood-btn" data-mood="bright">明るい</button>
+        <button class="mood-btn" data-mood="glamorous">ギラギラ</button>
+        <button class="mood-btn" data-mood="gorgeous">華やか</button>
       </div>
     </div>
 
@@ -629,61 +564,6 @@ h1 {
     </div>
 
     <div>
-      <div class="section-label">ゴールドカラー</div>
-      <div class="gold-type-row" id="goldTypeGrid">
-        <button class="gold-type-btn active" data-gold="yellow">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #f0d870, #D4AF37, #7a6010)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">イエローゴールド</span>
-            <span class="gold-type-en">YELLOW GOLD  #D4AF37</span>
-          </div>
-        </button>
-        <button class="gold-type-btn" data-gold="champagne">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #f5e8c0, #E6C97A, #a08830)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">シャンパンゴールド</span>
-            <span class="gold-type-en">CHAMPAGNE  #E6C97A</span>
-          </div>
-        </button>
-        <button class="gold-type-btn" data-gold="pink">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #f0c8c8, #D4A5A5, #8a5858)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">ピンクゴールド</span>
-            <span class="gold-type-en">PINK GOLD  #D4A5A5</span>
-          </div>
-        </button>
-        <button class="gold-type-btn" data-gold="rose">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #e09098, #B76E79, #6a2830)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">ローズゴールド</span>
-            <span class="gold-type-en">ROSE GOLD  #B76E79</span>
-          </div>
-        </button>
-        <button class="gold-type-btn" data-gold="antique">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #e0c878, #C1A45A, #6a5818)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">アンティークゴールド</span>
-            <span class="gold-type-en">ANTIQUE  #C1A45A</span>
-          </div>
-        </button>
-        <button class="gold-type-btn" data-gold="bronze">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #e8a060, #CD7F32, #6a3808)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">ブロンズ</span>
-            <span class="gold-type-en">BRONZE  #CD7F32</span>
-          </div>
-        </button>
-        <button class="gold-type-btn" data-gold="white">
-          <div class="gold-type-swatch" style="background: radial-gradient(circle at 35% 35%, #f4f4f4, #D7D7D7, #909090)"></div>
-          <div class="gold-type-info">
-            <span class="gold-type-name">ホワイトゴールド</span>
-            <span class="gold-type-en">WHITE GOLD  #D7D7D7</span>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <div>
       <div class="section-label">方向</div>
       <div class="direction-row">
         <button class="dir-btn active" data-dir="to right">→ 横</button>
@@ -696,7 +576,7 @@ h1 {
 
   <div class="grid-header">
     <div class="section-label" style="margin-bottom:0">
-      グラデーション — <span id="currentMoodLabel" style="color:var(--gold-light)">ギラギラ</span>
+      グラデーション — <span id="currentMoodLabel" style="color:var(--gold-light)">落ち着いた</span>
     </div>
   </div>
 
@@ -743,62 +623,15 @@ h1 {
 
 <script>
 const moodPalettes = {
-  // ギラギラ: 強めのコントラスト、鮮やかなイエローゴールド
-  glamorous: { label:'ギラギラ', base:[
-    ['#8a5e00','#f5d060'],['#7a5200','#edc84c'],['#906400','#f8d858'],
-    ['#7c5600','#f0cc50'],['#846000','#f2d054'],['#8e6200','#f6d45c'],
-    ['#7e5800','#ecca48'],['#885e00','#f4d258'],['#7a5400','#eec84e'],
-    ['#8c6000','#f6d660'],
-  ]},
-  // 華やか: やや温かみのあるオレンジ寄りゴールド
-  gorgeous: { label:'華やか', base:[
-    ['#9a6410','#f0c060'],['#8a5808','#e8b850'],['#a06c14','#f4c868'],
-    ['#8c5e0c','#eabc56'],['#966810','#f2c45e'],['#9e6a12','#f4ca64'],
-    ['#886008','#e6b84e'],['#946610','#f0c05c'],['#8e6210','#ecba54'],
-    ['#9c6c14','#f6cc68'],
-  ]},
-  // 大人っぽい: 深みのある落ち着いたゴールド、低彩度
-  mature: { label:'大人っぽい', base:[
-    ['#5a4010','#b89040'],['#4e3808','#ac8838'],['#60461a','#bc9448'],
-    ['#523c0e','#b08e3c'],['#584214','#b69042'],['#5e4818','#ba9246'],
-    ['#4c380a','#aa8636'],['#564010','#b48e40'],['#503e0c','#ae8c3e'],
-    ['#5c4416','#b89244'],
-  ]},
-  // 落ち着いた: 色差を抑えた均質なゴールド（添付画像の雰囲気）
-  calm: { label:'落ち着いた', base:[
-    ['#a07828','#c8a050'],['#987020','#c09848'],['#a47c2c','#cca454'],
-    ['#9c7424','#c49c4c'],['#a27a28','#c6a250'],['#a67e30','#caa656'],
-    ['#967020','#be9646'],['#a07828','#c8a252'],['#9a7222','#c09a4a'],
-    ['#a47c2c','#caa454'],
-  ]},
-  // 重厚: 暗いダークゴールド、渋くて重い質感
-  heavy: { label:'重厚', base:[
-    ['#2c1e04','#7a5c18'],['#261a02','#725416'],['#301e06','#7e6020'],
-    ['#281c04','#765a18'],['#2e2004','#7c5e1a'],['#2c1e06','#7a5c1c'],
-    ['#241802','#705214'],['#2a1e04','#786018'],['#261a02','#745618'],
-    ['#2e2006','#7c5e1e'],
-  ]},
-  // 高級感: ダークから明るいシャンパンゴールドへ
-  luxury: { label:'高級感', base:[
-    ['#1a1004','#d4a840'],['#140c02','#cc9e38'],['#1e1206','#d8ae48'],
-    ['#160e04','#d0a43c'],['#1c1004','#d6aa42'],['#1e1206','#daac48'],
-    ['#120c02','#ca9c36'],['#181004','#d4a640'],['#140e02','#ce9e3a'],
-    ['#1c1206','#d8ac46'],
-  ]},
-  // 上品: ライトベージュ〜ウォームゴールドの繊細なグラデ
-  elegant: { label:'上品', base:[
-    ['#c8a050','#eedeb0'],['#c09848','#e8d8a8'],['#caa454','#f0e0b4'],
-    ['#c49c4c','#eadaac'],['#c8a252','#eeddae'],['#caa656','#f0e2b6'],
-    ['#be9646','#e6d6a4'],['#c8a050','#eedeb2'],['#c29a4a','#eadaaa'],
-    ['#caa454','#f0e0b4'],
-  ]},
-  // 優雅: ソフトなシャンパン系、繊細で上品
-  grace: { label:'優雅', base:[
-    ['#b08c40','#e8d49a'],['#a88038','#e2cc92'],['#b49044','#ecd89e'],
-    ['#ac8840','#e6d096'],['#b08c40','#ead49c'],['#b49244','#eed8a0'],
-    ['#a67e36','#e0ca90'],['#b08840','#e8d298'],['#aa8438','#e4ce94'],
-    ['#b29044','#ead69e'],
-  ]},
+  calm:      { label:'落ち着いた' },
+  mature:    { label:'大人っぽい' },
+  heavy:     { label:'重厚' },
+  luxury:    { label:'高級感' },
+  elegant:   { label:'上品' },
+  grace:     { label:'優雅' },
+  bright:    { label:'明るい' },
+  glamorous: { label:'ギラギラ' },
+  gorgeous:  { label:'華やか' },
 };
 
 const gradientNames = [
@@ -806,19 +639,6 @@ const gradientNames = [
   'Imperial Shimmer','Royal Amber','Celestial Gold','Gilded Dawn',
   'Arcane Lustre','Sacred Flame'
 ];
-
-// ─── GOLD TYPE DEFINITIONS ───
-// baseHex: 各ゴールドカラーの正確なベース色（添付資料より）
-// グラデーションはベース色から明度を上下させてdark/lightペアを生成
-const goldTypes = {
-  yellow:    { label:'イエローゴールド',    en:'YELLOW GOLD',    base:'#D4AF37' },
-  champagne: { label:'シャンパンゴールド',  en:'CHAMPAGNE GOLD', base:'#E6C97A' },
-  pink:      { label:'ピンクゴールド',      en:'PINK GOLD',      base:'#D4A5A5' },
-  rose:      { label:'ローズゴールド',      en:'ROSE GOLD',      base:'#B76E79' },
-  antique:   { label:'アンティークゴールド',en:'ANTIQUE GOLD',   base:'#C1A45A' },
-  bronze:    { label:'ブロンズ',            en:'BRONZE',         base:'#CD7F32' },
-  white:     { label:'ホワイトゴールド',    en:'WHITE GOLD',     base:'#D7D7D7' },
-};
 
 // ─── COLOR MATH ───
 function hexToHsl(hex) {
@@ -855,62 +675,61 @@ function hslToHex(h,s,l){
   return '#'+toHex(r)+toHex(g)+toHex(b);
 }
 
-// ベース色から [dark, light] ペアを生成
-// moodContrastはdark/lightの明度差の強さ（0〜1）
-function makeBasePair(baseHex, darkL, lightL) {
-  const [h, s, l] = hexToHsl(baseHex);
-  const dark  = hslToHex(h, Math.min(s + 8, 100), Math.max(darkL,  5));
-  const light = hslToHex(h, Math.max(s - 8,  0),  Math.min(lightL, 95));
-  return [dark, light];
-}
-
-// 雰囲気ごとのdark/light明度レンジ定義（ベース色のLを基準に相対値で）
-// [darkOffset, lightOffset] — ベースLに加算
-const moodLRange = {
-  glamorous: [-28, +28],   // 高コントラスト
-  gorgeous:  [-22, +24],
-  mature:    [-20, +18],
-  calm:      [-10, +12],   // 低コントラスト・均質
-  heavy:     [-30, +10],   // 暗め
-  luxury:    [-32, +30],   // 深い暗→明
-  elegant:   [-12, +22],
-  grace:     [-14, +20],
+// ─── MOOD DEFINITIONS ───
+// base: グラデーションのベースとなるHEX
+// 各moodの特性に応じたdark/light明度オフセットとバリエーション
+const moodDefs = {
+  // 落ち着いた: #D4AF37ベース、色差小さく均質
+  calm:      { base:'#D4AF37', dOff:-10, lOff:+12, sD:+3,  sL:-5,  v:[0,+1,-1,+2,-2,+1,-1,+2,-2,0]  },
+  // 大人っぽい: やや暗め、ミッドトーン中心
+  mature:    { base:'#C49A2A', dOff:-18, lOff:+16, sD:+4,  sL:-4,  v:[0,-2,+2,-3,+1,-1,+3,-4,+2,-2]  },
+  // 重厚: 暗い深みのあるゴールド
+  heavy:     { base:'#8B6914', dOff:-28, lOff:+8,  sD:+8,  sL:-3,  v:[0,-2,+2,-3,+1,-1,+3,-4,+2,-2]  },
+  // 高級感: 深い暗→明るい輝き、ドラマチック
+  luxury:    { base:'#B8860B', dOff:-30, lOff:+30, sD:+6,  sL:-6,  v:[0,+2,-2,+3,-1,+1,-3,+4,-2,+2]  },
+  // 上品: ライト寄り、繊細
+  elegant:   { base:'#D4AF37', dOff:-10, lOff:+22, sD:0,   sL:-8,  v:[0,+2,-2,+3,-1,+1,-3,+4,-2,+2]  },
+  // 優雅: ソフトシャンパン系
+  grace:     { base:'#C9A84C', dOff:-12, lOff:+20, sD:-2,  sL:-6,  v:[0,+1,-1,+2,-2,+1,-1,+3,-3,+1]  },
+  // 明るい: SVG参考 #f0b200→#f8dd00→#fffac6 の温かみある明るいゴールド
+  bright:    { base:'#f8dd00', dOff:-22, lOff:+16, sD:+15, sL:-20, v:[0,+1,-1,+2,-2,+1,-1,+2,-2,0]   },
+  // ギラギラ: 高コントラスト
+  glamorous: { base:'#D4AF37', dOff:-28, lOff:+28, sD:+8,  sL:-4,  v:[0,+2,-2,+3,-3,+1,-1,+4,-4,+2]  },
+  // 華やか: オレンジ寄り温かみ
+  gorgeous:  { base:'#CC8800', dOff:-22, lOff:+24, sD:+6,  sL:-4,  v:[0,+2,-2,+3,-1,+1,-3,+4,-2,+2]  },
 };
 
-// 各moodで10パターン、baseのL値に微妙なバリエーションをつける
-const moodVariants = {
-  glamorous: [0,+2,-2,+3,-3,+1,-1,+4,-4,+2],
-  gorgeous:  [0,+2,-2,+3,-1,+1,-3,+4,-2,+2],
-  mature:    [0,-2,+2,-3,+1,-1,+3,-4,+2,-2],
-  calm:      [0,+1,-1,+2,-2,+1,-1,+2,-2, 0],
-  heavy:     [0,-2,+2,-3,+1,-1,+3,-4,+2,-2],
-  luxury:    [0,+2,-2,+3,-1,+1,-3,+4,-2,+2],
-  elegant:   [0,+2,-2,+3,-1,+1,-3,+4,-2,+2],
-  grace:     [0,+1,-1,+2,-2,+1,-1,+3,-3,+1],
-};
+// 雰囲気 → 10パターンのdark/lightペア生成
+function generatePairs(moodKey) {
+  // 「明るい」はSVGの実測値をそのまま使用: #f0b200(dark) / #fffac6(light)
+  // バリエーションはdarkのhue/satを微妙にずらす
+  if (moodKey === 'bright') {
+    const darkBase  = '#f0b200';
+    const lightBase = '#fffac6';
+    const [dH, dS, dL] = hexToHsl(darkBase);
+    const [lH, lS, lL] = hexToHsl(lightBase);
+    const dVars = [0,+1,-1,+2,-2,+1,-1,+2,-2,0];
+    return dVars.map(v => {
+      const dark  = hslToHex(dH, Math.min(dS + v*0.5, 100), Math.max(dL + v, 4));
+      const light = hslToHex(lH, Math.max(lS - v*0.3,   0), Math.min(lL + v*0.5, 95));
+      return [dark, light];
+    });
+  }
 
-// ゴールドカラー種別 × 雰囲気 からbase pairsを動的に生成
-function generatePairs(goldKey, moodKey) {
-  const gt = goldTypes[goldKey];
-  const [dOff, lOff] = moodLRange[moodKey];
-  const variants = moodVariants[moodKey];
-  const [bH, bS, bL] = hexToHsl(gt.base);
-
-  return variants.map(vOff => {
+  const def = moodDefs[moodKey];
+  const [bH, bS, bL] = hexToHsl(def.base);
+  return def.v.map(vOff => {
     const vL = bL + vOff;
-    const darkL  = Math.max(vL + dOff,  4);
-    const lightL = Math.min(vL + lOff, 94);
-    // sも雰囲気に応じて微調整
-    const sMod = moodKey === 'heavy' ? 5 : moodKey === 'calm' ? -5 : 0;
-    const dark  = hslToHex(bH, Math.min(bS + sMod + 6, 100), darkL);
-    const light = hslToHex(bH, Math.max(bS + sMod - 6,   0), lightL);
+    const darkL  = Math.max(vL + def.dOff,  4);
+    const lightL = Math.min(vL + def.lOff, 95);
+    const dark  = hslToHex(bH, Math.min(bS + def.sD, 100), darkL);
+    const light = hslToHex(bH, Math.max(bS + def.sL,   0), lightL);
     return [dark, light];
   });
 }
 
-let currentMood = 'glamorous';
+let currentMood = 'calm';
 let currentPattern = 'sandwich';
-let currentGoldType = 'yellow';
 let gradientDir = 'to right';
 let currentGradients = [];
 let activeCardIndex = -1;
@@ -958,7 +777,7 @@ function updatePatternPreviews() {
 function render() {
   const grid = document.getElementById('gradientGrid');
   const pal = moodPalettes[currentMood];
-  const pairs = generatePairs(currentGoldType, currentMood);
+  const pairs = generatePairs(currentMood);
   currentGradients = pairs.map((base, i) => ({
     base, stops: buildStops(base, currentPattern), name: gradientNames[i], index: i
   }));
@@ -985,9 +804,7 @@ function render() {
     grid.appendChild(card);
   });
 
-  const gt = goldTypes[currentGoldType];
-  document.getElementById('currentMoodLabel').textContent =
-    pal.label + '  ·  ' + gt.label;
+  document.getElementById('currentMoodLabel').textContent = moodPalettes[currentMood].label;
   updatePatternPreviews();
 }
 
@@ -1102,15 +919,6 @@ function showToast(msg) {
   clearTimeout(t._timer);
   t._timer = setTimeout(()=>t.classList.remove('show'), 2200);
 }
-
-document.getElementById('goldTypeGrid').addEventListener('click', e => {
-  const btn = e.target.closest('.gold-type-btn');
-  if (!btn) return;
-  document.querySelectorAll('.gold-type-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentGoldType = btn.dataset.gold;
-  render();
-});
 
 document.getElementById('moodGrid').addEventListener('click', e => {
   const btn = e.target.closest('.mood-btn');
