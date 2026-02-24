@@ -4,948 +4,931 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AURUM — Gold Gradient Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --bg: #0a0905;
   --surface: #111008;
-  --border: rgba(200,160,60,0.15);
-  --gold-text: #c8a03c;
-  --gold-bright: #f0d060;
-  --text: #e8dcc0;
-  --text-muted: rgba(232,220,192,0.45);
+  --border: #2a2415;
+  --border-gold: #5a4a1a;
+  --gold-primary: #c9a84c;
+  --gold-light: #e8c96e;
+  --gold-pale: #f0d98a;
+  --gold-dim: #8a6f2e;
+  --text: #e8dfc8;
+  --text-dim: #8a7d60;
+  --text-muted: #4a4230;
+  --radius: 10px;
+  --radius-sm: 7px;
 }
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Josefin Sans', sans-serif;
-  font-weight: 300;
+  font-family: 'Noto Serif JP', serif;
   min-height: 100vh;
   overflow-x: hidden;
+  font-size: 16px;
 }
-
-/* Subtle grain overlay */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1000;
-  opacity: 0.6;
+  opacity: 0.4;
+}
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60vw;
+  height: 40vh;
+  background: radial-gradient(ellipse, rgba(180,140,40,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+  position: relative;
+  z-index: 1;
 }
 
+/* HEADER */
 header {
+  padding: 52px 0 44px;
   text-align: center;
-  padding: 52px 24px 32px;
   border-bottom: 1px solid var(--border);
   position: relative;
 }
-
 header::after {
   content: '';
   position: absolute;
   bottom: -1px;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
+  width: 240px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-text), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
 }
-
-.logo {
+.logo-mark {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 0.5em;
+  color: var(--gold-dim);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+h1 {
   font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 78px);
   font-weight: 300;
-  font-size: clamp(40px, 6vw, 72px);
-  letter-spacing: 0.35em;
-  background: linear-gradient(135deg, #8a6820 0%, #d4a832 25%, #f0d060 50%, #d4a832 75%, #8a6820 100%);
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, #c9a84c 0%, #f0d98a 40%, #c9a84c 65%, #a07830 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1;
+  margin-bottom: 14px;
 }
-
 .tagline {
-  font-size: 10px;
-  letter-spacing: 0.5em;
-  color: var(--text-muted);
-  margin-top: 8px;
-  text-transform: uppercase;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
 }
 
-.main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-
-@media (max-width: 900px) {
-  .main { grid-template-columns: 1fr; }
-}
-
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 28px;
-  position: relative;
-}
-
-.panel-title {
-  font-size: 9px;
-  letter-spacing: 0.5em;
-  color: var(--gold-text);
-  text-transform: uppercase;
-  margin-bottom: 20px;
+/* CONTROLS */
+.controls {
+  padding: 48px 0 36px;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 36px;
 }
-
-.panel-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-/* Mood selector */
-.mood-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-}
-
-@media (max-width: 600px) {
-  .mood-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-.mood-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  font-family: 'Josefin Sans', sans-serif;
+.section-label {
+  font-family: 'Cinzel', serif;
   font-size: 10px;
-  letter-spacing: 0.15em;
-  padding: 12px 8px;
+  letter-spacing: 0.5em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* MOOD BUTTONS */
+.mood-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.mood-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 11px 22px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
   cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius);
 }
-
 .mood-btn::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(200,160,60,0.08), transparent);
+  background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.06));
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s;
+  border-radius: var(--radius);
 }
-
-.mood-btn:hover { border-color: rgba(200,160,60,0.4); color: var(--text); }
+.mood-btn:hover { border-color: var(--gold-dim); color: var(--gold-light); }
 .mood-btn:hover::before { opacity: 1; }
 .mood-btn.active {
-  border-color: var(--gold-text);
-  color: var(--gold-bright);
-  background: rgba(200,160,60,0.08);
+  border-color: var(--gold-primary);
+  color: var(--gold-pale);
+  background: rgba(201,168,76,0.08);
+  box-shadow: 0 0 20px rgba(201,168,76,0.12), inset 0 0 20px rgba(201,168,76,0.04);
 }
 
-.mood-emoji { font-size: 16px; display: block; margin-bottom: 4px; }
-
-/* Gold type selector */
-.type-list {
+/* PATTERN BUTTONS */
+.pattern-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.pattern-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 12px 16px;
+  font-family: 'Noto Serif JP', serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.type-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-  display: flex;
   align-items: center;
-  gap: 14px;
-}
-
-.type-swatch {
-  width: 32px;
-  height: 14px;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.type-btn:hover { border-color: rgba(200,160,60,0.4); color: var(--text); }
-.type-btn.active { border-color: var(--gold-text); color: var(--gold-bright); background: rgba(200,160,60,0.08); }
-
-/* Reflections */
-.reflection-row {
-  display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  border-radius: var(--radius);
+  min-width: 130px;
 }
-
-.ref-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-width: 52px;
-  text-align: center;
-}
-.ref-btn:hover { border-color: rgba(200,160,60,0.4); color: var(--text); }
-.ref-btn.active { border-color: var(--gold-text); color: var(--gold-bright); background: rgba(200,160,60,0.08); }
-
-/* Preview */
-.preview-box {
+.pattern-btn .pat-preview {
   width: 100%;
-  height: 160px;
-  border-radius: 2px;
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
-  transition: background 0.4s ease;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.04);
 }
-
-.preview-text {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.85);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-  mix-blend-mode: overlay;
+.pattern-btn .pat-name {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
-
-/* Color stops display */
-.stops-row {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.stop-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  padding: 5px 10px;
+.pattern-btn .pat-sub {
+  font-family: 'Cinzel', serif;
   font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.stop-chip:hover { border-color: var(--gold-text); color: var(--text); }
-
-.stop-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* Angle control */
-.angle-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.angle-row label {
-  font-size: 9px;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   color: var(--text-muted);
   white-space: nowrap;
 }
-
-input[type=range] {
-  flex: 1;
-  -webkit-appearance: none;
-  height: 2px;
-  background: var(--border);
-  outline: none;
-  cursor: pointer;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--gold-text);
-  cursor: pointer;
-  border: 2px solid var(--bg);
+.pattern-btn:hover { border-color: var(--gold-dim); color: var(--gold-light); }
+.pattern-btn.active {
+  border-color: var(--gold-primary);
+  color: var(--gold-pale);
+  background: rgba(201,168,76,0.08);
+  box-shadow: 0 0 16px rgba(201,168,76,0.1);
 }
 
-.angle-val {
-  font-size: 10px;
-  color: var(--gold-text);
-  min-width: 36px;
-  text-align: right;
-}
-
-/* Direction selector */
-.dir-row {
+/* DIRECTION */
+.dir-row-wrap {
   display: flex;
-  gap: 6px;
-  margin-bottom: 24px;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
-
+.direction-row { display: flex; gap: 8px; }
 .dir-btn {
-  background: transparent;
+  background: none;
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  padding: 8px 12px;
+  padding: 9px 18px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   cursor: pointer;
   transition: all 0.2s;
+  border-radius: var(--radius-sm);
 }
-.dir-btn:hover { border-color: rgba(200,160,60,0.4); color: var(--text); }
-.dir-btn.active { border-color: var(--gold-text); color: var(--gold-bright); background: rgba(200,160,60,0.08); }
+.dir-btn.active {
+  border-color: var(--gold-primary);
+  color: var(--gold-light);
+  background: rgba(201,168,76,0.08);
+}
+.dir-btn:hover:not(.active) { border-color: var(--gold-dim); color: var(--gold-light); }
 
-/* Output buttons */
-.output-grid {
+/* GRID HEADER */
+.grid-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* GRADIENT GRID */
+.gradient-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  padding-bottom: 100px;
 }
-
-.out-btn {
-  background: transparent;
+.gradient-card {
+  position: relative;
+  animation: fadeUp 0.4s ease both;
+}
+.gradient-card:nth-child(1){animation-delay:0.04s}
+.gradient-card:nth-child(2){animation-delay:0.08s}
+.gradient-card:nth-child(3){animation-delay:0.12s}
+.gradient-card:nth-child(4){animation-delay:0.16s}
+.gradient-card:nth-child(5){animation-delay:0.20s}
+.gradient-card:nth-child(6){animation-delay:0.24s}
+.gradient-card:nth-child(7){animation-delay:0.28s}
+.gradient-card:nth-child(8){animation-delay:0.32s}
+.gradient-card:nth-child(9){animation-delay:0.36s}
+.gradient-card:nth-child(10){animation-delay:0.40s}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.gradient-preview {
+  height: 190px;
   border: 1px solid var(--border);
-  color: var(--text);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.25em;
-  padding: 14px 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-  text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
-
-.out-btn.primary {
-  border-color: var(--gold-text);
-  color: var(--gold-bright);
-  grid-column: 1 / -1;
-  background: rgba(200,160,60,0.06);
+.gradient-preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
-
-.out-btn:hover {
-  background: rgba(200,160,60,0.1);
-  border-color: var(--gold-text);
-  color: var(--gold-bright);
+.gradient-card:hover .gradient-preview {
+  border-color: var(--gold-primary);
+  transform: translateY(-5px);
+  box-shadow: 0 14px 44px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,168,76,0.28);
 }
-
-.out-btn.copied {
-  border-color: #4ade80;
-  color: #4ade80;
+.gradient-card:hover .gradient-preview::after { opacity: 1; }
+.card-info { padding: 12px 2px 8px; }
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-/* CSS code output */
-.code-box {
-  background: rgba(0,0,0,0.4);
+.card-swatches { display: flex; gap: 4px; margin-bottom: 12px; }
+.swatch {
+  flex: 1;
+  height: 22px;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.swatch:hover { transform: scaleY(1.35); z-index: 2; }
+.swatch-tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border-radius: 4px;
+}
+.swatch:hover .swatch-tip { opacity: 1; }
+.card-actions { display: flex; gap: 7px; }
+.btn-small {
+  flex: 1;
+  background: none;
   border: 1px solid var(--border);
-  padding: 16px;
-  font-family: 'Courier New', monospace;
-  font-size: 10px;
-  color: rgba(200,160,60,0.7);
-  line-height: 1.8;
-  word-break: break-all;
-  margin-top: 16px;
-  max-height: 120px;
-  overflow-y: auto;
-  letter-spacing: 0;
+  color: var(--text-muted);
+  padding: 8px 6px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  border-radius: var(--radius-sm);
 }
+.btn-small:hover { border-color: var(--gold-dim); color: var(--gold-light); background: rgba(201,168,76,0.06); }
+.btn-small.copied { border-color: var(--gold-primary); color: var(--gold-primary); background: rgba(201,168,76,0.1); }
 
-.code-box::-webkit-scrollbar { width: 4px; }
-.code-box::-webkit-scrollbar-track { background: transparent; }
-.code-box::-webkit-scrollbar-thumb { background: var(--border); }
-
-/* Toast */
-.toast {
+/* BOTTOM BAR */
+.bulk-actions {
   position: fixed;
   bottom: 32px;
   left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: rgba(200,160,60,0.15);
-  border: 1px solid var(--gold-text);
-  color: var(--gold-bright);
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 10px;
+  transform: translateX(-50%);
+  border: 1px solid var(--border-gold);
+  background: rgba(10,9,5,0.96);
+  backdrop-filter: blur(20px);
+  z-index: 100;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.bulk-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  padding: 20px 56px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
   letter-spacing: 0.3em;
-  padding: 12px 28px;
-  opacity: 0;
+  cursor: pointer;
   transition: all 0.3s;
-  z-index: 9999;
+  text-transform: uppercase;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.bulk-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.bulk-btn:hover { color: var(--gold-pale); }
+.bulk-btn:hover::before { opacity: 1; }
+.bulk-btn .btn-icon { font-size: 20px; line-height: 1; }
+
+/* PANEL */
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  opacity: 0;
   pointer-events: none;
+  transition: opacity 0.3s;
+}
+.panel-overlay.open { opacity: 1; pointer-events: all; }
+.panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(500px, 100vw);
+  background: #0c0b07;
+  border-left: 1px solid var(--border-gold);
+  z-index: 201;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow-y: auto;
+  padding: 44px 40px;
+}
+.panel.open { transform: translateX(0); }
+.panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+.panel-sub { font-size: 14px; color: var(--text-muted); font-style: italic; margin-bottom: 28px; }
+.panel-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+.panel-close:hover { border-color: var(--gold-dim); color: var(--gold-light); }
+.code-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin: 14px 0;
+  position: relative;
+  border-radius: var(--radius-sm);
+}
+.code-block pre {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--gold-light);
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.9;
+}
+.code-copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: 1px solid var(--border-gold);
+  color: var(--gold-dim);
+  padding: 5px 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: var(--radius-sm);
+}
+.code-copy-btn:hover { color: var(--gold-light); border-color: var(--gold-primary); }
+.panel-preview { height: 130px; margin-bottom: 28px; border: 1px solid var(--border); border-radius: var(--radius); }
+.panel-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--gold-dim);
+  margin: 28px 0 12px;
   text-transform: uppercase;
 }
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
 
-/* Divider */
-.divider {
-  height: 1px;
-  background: var(--border);
-  margin: 20px 0;
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  background: rgba(10,9,5,0.96);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-pale);
+  padding: 13px 26px;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  z-index: 300;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.3s;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.15);
+  border-radius: var(--radius);
 }
+.toast.show { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 1100px) { .gradient-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 700px) { .gradient-grid { grid-template-columns: repeat(2,1fr); } .container { padding: 0 20px; } }
 </style>
 </head>
 <body>
+<div class="container">
+  <header>
+    <div class="logo-mark">Gold Gradient Studio</div>
+    <h1>AURUM</h1>
+    <p class="tagline">— 黄金のグラデーションを、あなたの手に —</p>
+  </header>
 
-<header>
-  <div class="logo">AURUM</div>
-  <div class="tagline">Gold Gradient Studio — For Web & Illustrator</div>
-</header>
-
-<div class="main">
-
-  <!-- LEFT PANEL: Controls -->
-  <div style="display:flex;flex-direction:column;gap:20px;">
-
-    <!-- Mood -->
-    <div class="panel">
-      <div class="panel-title">① 雰囲気を選択</div>
+  <div class="controls">
+    <div>
+      <div class="section-label">雰囲気</div>
       <div class="mood-grid" id="moodGrid">
-        <button class="mood-btn active" data-mood="glitter" onclick="setMood(this)"><span class="mood-emoji">✨</span>ギラギラ</button>
-        <button class="mood-btn" data-mood="adult" onclick="setMood(this)"><span class="mood-emoji">🥃</span>大人っぽい</button>
-        <button class="mood-btn" data-mood="calm" onclick="setMood(this)"><span class="mood-emoji">🍂</span>落ち着いた</button>
-        <button class="mood-btn" data-mood="vivid" onclick="setMood(this)"><span class="mood-emoji">🌸</span>華やか</button>
-        <button class="mood-btn" data-mood="heavy" onclick="setMood(this)"><span class="mood-emoji">⚓</span>重厚</button>
-        <button class="mood-btn" data-mood="luxury" onclick="setMood(this)"><span class="mood-emoji">💎</span>高級感</button>
-        <button class="mood-btn" data-mood="elegant" onclick="setMood(this)"><span class="mood-emoji">🌹</span>上品</button>
-        <button class="mood-btn" data-mood="futuristic" onclick="setMood(this)"><span class="mood-emoji">🚀</span>近未来的</button>
-        <button class="mood-btn" data-mood="graceful" onclick="setMood(this)"><span class="mood-emoji">🦢</span>優雅</button>
-        <button class="mood-btn" data-mood="cool" onclick="setMood(this)"><span class="mood-emoji">❄️</span>涼しげ</button>
+        <button class="mood-btn active" data-mood="glamorous">ギラギラ</button>
+        <button class="mood-btn" data-mood="gorgeous">華やか</button>
+        <button class="mood-btn" data-mood="mature">大人っぽい</button>
+        <button class="mood-btn" data-mood="calm">落ち着いた</button>
+        <button class="mood-btn" data-mood="heavy">重厚</button>
+        <button class="mood-btn" data-mood="luxury">高級感</button>
+        <button class="mood-btn" data-mood="elegant">上品</button>
+        <button class="mood-btn" data-mood="futuristic">近未来的</button>
+        <button class="mood-btn" data-mood="grace">優雅</button>
+        <button class="mood-btn" data-mood="cool">涼しげ</button>
       </div>
     </div>
 
-    <!-- Gold Type -->
-    <div class="panel">
-      <div class="panel-title">② ゴールドの種類</div>
-      <div class="type-list">
-        <button class="type-btn active" data-type="yellow" onclick="setType(this)">
-          <div class="type-swatch" style="background:linear-gradient(90deg,#8a6820,#f0d060,#c8a03c)"></div>
-          イエローゴールド
+    <div>
+      <div class="section-label">グラデーションパターン</div>
+      <div class="pattern-row" id="patternGrid">
+        <button class="pattern-btn" data-pattern="simple">
+          <div class="pat-preview" id="prev-simple"></div>
+          <span class="pat-name">シンプル</span>
+          <span class="pat-sub">2点グラデーション</span>
         </button>
-        <button class="type-btn" data-type="champagne" onclick="setType(this)">
-          <div class="type-swatch" style="background:linear-gradient(90deg,#b8a07a,#ede0c0,#c8b08a)"></div>
-          シャンパンゴールド
+        <button class="pattern-btn active" data-pattern="sandwich">
+          <div class="pat-preview" id="prev-sandwich"></div>
+          <span class="pat-name">サンドイッチ</span>
+          <span class="pat-sub">センターハイライト</span>
         </button>
-        <button class="type-btn" data-type="rose" onclick="setType(this)">
-          <div class="type-swatch" style="background:linear-gradient(90deg,#a06055,#e8a898,#c07868)"></div>
-          ピンクゴールド / ローズゴールド
+        <button class="pattern-btn" data-pattern="metallic">
+          <div class="pat-preview" id="prev-metallic"></div>
+          <span class="pat-name">メタリック</span>
+          <span class="pat-sub">多段反射型</span>
         </button>
-        <button class="type-btn" data-type="antique" onclick="setType(this)">
-          <div class="type-swatch" style="background:linear-gradient(90deg,#5a3a1a,#c09050,#7a5028)"></div>
-          アンティークゴールド / ブロンズ
+        <button class="pattern-btn" data-pattern="offset">
+          <div class="pat-preview" id="prev-offset"></div>
+          <span class="pat-name">非対称</span>
+          <span class="pat-sub">オフセット</span>
         </button>
-        <button class="type-btn" data-type="white" onclick="setType(this)">
-          <div class="type-swatch" style="background:linear-gradient(90deg,#a0a8b0,#e8eef2,#b8c0c8)"></div>
-          ホワイトゴールド
+        <button class="pattern-btn" data-pattern="flash">
+          <div class="pat-preview" id="prev-flash"></div>
+          <span class="pat-name">フラッシュ</span>
+          <span class="pat-sub">ファセット</span>
         </button>
       </div>
     </div>
 
-    <!-- Reflections -->
-    <div class="panel">
-      <div class="panel-title">③ 反射回数</div>
-      <div class="reflection-row">
-        <button class="ref-btn active" data-ref="2" onclick="setRef(this)">2</button>
-        <button class="ref-btn" data-ref="3" onclick="setRef(this)">3</button>
-        <button class="ref-btn" data-ref="4" onclick="setRef(this)">4</button>
-        <button class="ref-btn" data-ref="5" onclick="setRef(this)">5</button>
-        <button class="ref-btn" data-ref="6" onclick="setRef(this)">6</button>
-        <button class="ref-btn" data-ref="8" onclick="setRef(this)">8</button>
-        <button class="ref-btn" data-ref="10" onclick="setRef(this)">10</button>
+    <div>
+      <div class="section-label">方向</div>
+      <div class="direction-row">
+        <button class="dir-btn active" data-dir="to right">→ 横</button>
+        <button class="dir-btn" data-dir="to bottom">↓ 縦</button>
+        <button class="dir-btn" data-dir="135deg">↘ 斜め</button>
+        <button class="dir-btn" data-dir="circle">◯ 円形</button>
       </div>
     </div>
-
   </div>
 
-  <!-- RIGHT PANEL: Preview + Output -->
-  <div style="display:flex;flex-direction:column;gap:20px;">
-
-    <div class="panel">
-      <div class="panel-title">プレビュー</div>
-
-      <!-- Direction -->
-      <div class="dir-row">
-        <button class="dir-btn active" data-dir="linear" onclick="setDir(this)">LINEAR</button>
-        <button class="dir-btn" data-dir="radial" onclick="setDir(this)">RADIAL</button>
-        <button class="dir-btn" data-dir="conic" onclick="setDir(this)">CONIC</button>
-      </div>
-
-      <!-- Angle (shown only for linear) -->
-      <div class="angle-row" id="angleRow">
-        <label>ANGLE</label>
-        <input type="range" id="angleSlider" min="0" max="360" value="135" oninput="setAngle(this.value)">
-        <span class="angle-val" id="angleVal">135°</span>
-      </div>
-
-      <div class="preview-box" id="previewBox">
-        <div class="preview-text">GOLD</div>
-      </div>
-
-      <div class="stops-row" id="stopsRow"></div>
-
-      <div class="code-box" id="codeBox"></div>
+  <div class="grid-header">
+    <div class="section-label" style="margin-bottom:0">
+      グラデーション — <span id="currentMoodLabel" style="color:var(--gold-light)">ギラギラ</span>
     </div>
+  </div>
 
-    <div class="panel">
-      <div class="panel-title">出力 / エクスポート</div>
-      <div class="output-grid">
-        <button class="out-btn primary" onclick="copyCSS()">CSS コードをコピー</button>
-        <button class="out-btn" onclick="copyHex()">HEX 一括コピー</button>
-        <button class="out-btn" onclick="downloadSVG()">SVG ダウンロード<br><span style="font-size:8px;opacity:0.5">Illustratorに配置可</span></button>
-        <button class="out-btn" onclick="downloadASE()">ASE スウォッチ<br><span style="font-size:8px;opacity:0.5">Illustrator用</span></button>
-      </div>
-      <div class="divider"></div>
-      <div style="font-size:9px;color:var(--text-muted);line-height:1.9;letter-spacing:0.1em;">
-        <strong style="color:var(--gold-text)">SVGの使い方</strong><br>
-        IllustratorでSVGを開き → スウォッチパネルに矩形をD&D<br><br>
-        <strong style="color:var(--gold-text)">ASEスウォッチの使い方</strong><br>
-        スウォッチパネル → メニュー → 読み込み でASEファイルを選択
-      </div>
-    </div>
+  <div class="gradient-grid" id="gradientGrid"></div>
+</div>
 
+<div class="bulk-actions">
+  <button class="bulk-btn" id="bulkSvgBtn">
+    <span class="btn-icon">◈</span>
+    SVG 一括出力
+  </button>
+</div>
+
+<div class="panel-overlay" id="panelOverlay"></div>
+<div class="panel" id="panel">
+  <button class="panel-close" id="panelClose">✕</button>
+  <div class="panel-title" id="panelTitle">Gradient Detail</div>
+  <div class="panel-sub" id="panelSub">黄金のグラデーション</div>
+  <div class="panel-preview" id="panelPreview"></div>
+
+  <div class="panel-section-title">CSS GRADIENT</div>
+  <div class="code-block">
+    <pre id="cssPre"></pre>
+    <button class="code-copy-btn" onclick="copyCode('cssPre')">COPY</button>
+  </div>
+  <div class="panel-section-title">CSS VARIABLE</div>
+  <div class="code-block">
+    <pre id="varPre"></pre>
+    <button class="code-copy-btn" onclick="copyCode('varPre')">COPY</button>
+  </div>
+  <div class="panel-section-title">INLINE STYLE</div>
+  <div class="code-block">
+    <pre id="twPre"></pre>
+    <button class="code-copy-btn" onclick="copyCode('twPre')">COPY</button>
+  </div>
+  <div class="panel-section-title">HEX VALUES</div>
+  <div class="code-block">
+    <pre id="hexPre"></pre>
+    <button class="code-copy-btn" onclick="copyCode('hexPre')">COPY</button>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">COPIED</div>
 
 <script>
-// ========================
-// DATA
-// ========================
-
-// Base color stops per gold type
-const goldTypes = {
-  yellow: {
-    dark:    ['#3d2800', '#6a4410', '#8a5e18'],
-    mid:     ['#c8a03c', '#d4a832', '#e8c060'],
-    bright:  ['#f0d060', '#fce080', '#fffaaa'],
-    shadow:  ['#7a5010', '#5c3a08', '#2a1800'],
-  },
-  champagne: {
-    dark:    ['#5c4a30', '#7a6045', '#8a7050'],
-    mid:     ['#c8b08a', '#d8c09a', '#e8d0aa'],
-    bright:  ['#f0e8d0', '#faf4e8', '#ffffff'],
-    shadow:  ['#8a7055', '#6a5038', '#3a2818'],
-  },
-  rose: {
-    dark:    ['#4a2018', '#6a3028', '#804038'],
-    mid:     ['#c07868', '#d08878', '#e09888'],
-    bright:  ['#f0b8a8', '#fcd8c8', '#ffe8e0'],
-    shadow:  ['#7a4030', '#5a2820', '#3a1810'],
-  },
-  antique: {
-    dark:    ['#1a0e05', '#2c1a08', '#3c2410'],
-    mid:     ['#7a5028', '#9a6838', '#b07848'],
-    bright:  ['#c8904a', '#d8a058', '#e8b868'],
-    shadow:  ['#5a3818', '#3a2208', '#1e1005'],
-  },
-  white: {
-    dark:    ['#5a6068', '#6a7080', '#788090'],
-    mid:     ['#b0b8c8', '#c0c8d8', '#d0d8e8'],
-    bright:  ['#e8eef8', '#f4f8ff', '#ffffff'],
-    shadow:  ['#707880', '#585f68', '#404850'],
-  }
+const moodPalettes = {
+  glamorous: { label:'ギラギラ', base:[
+    ['#c88000','#FFE566'],['#d4a000','#FFF176'],['#b07000','#FFEC73'],
+    ['#cc9400','#FFF59D'],['#a86000','#FFFF8D'],['#d49800','#FFE082'],
+    ['#b88000','#FFD54F'],['#e0a800','#FFF9C4'],['#c07800','#FFEC73'],
+    ['#bc8c00','#FFD740'],
+  ]},
+  gorgeous: { label:'華やか', base:[
+    ['#b05000','#FFE082'],['#9c5a00','#FFE0B2'],['#a06000','#FFEE58'],
+    ['#c08000','#FFF176'],['#b04800','#FFE57F'],['#a85400','#FFE082'],
+    ['#cc9400','#FFF9C4'],['#9c5800','#FFE0B2'],['#b06000','#FFE57F'],
+    ['#a05000','#FFE082'],
+  ]},
+  mature: { label:'大人っぽい', base:[
+    ['#1a0e00','#c49a00'],['#160c00','#daa520'],['#0e0800','#c9a84c'],
+    ['#0a0600','#c49a00'],['#180e00','#c9a84c'],['#0e0800','#daa520'],
+    ['#0a0600','#c9a84c'],['#0e0800','#c49a00'],['#160c00','#c49a00'],
+    ['#0a0600','#daa520'],
+  ]},
+  calm: { label:'落ち着いた', base:[
+    ['#3a2e14','#e8d5a0'],['#2e2416','#d4b878'],['#22180c','#c4a060'],
+    ['#2c2414','#d4b468'],['#201a0c','#c0985c'],['#22180c','#e0c88a'],
+    ['#2e2416','#dcc080'],['#3a2e14','#edd49a'],['#201a0c','#deb87a'],
+    ['#2c2414','#dcc07c'],
+  ]},
+  heavy: { label:'重厚', base:[
+    ['#050300','#9b7b1a'],['#040200','#daa520'],['#030200','#9b7b1a'],
+    ['#060400','#9b7b1a'],['#050300','#876820'],['#040200','#9b7b1a'],
+    ['#030200','#8b6a14'],['#060400','#a07828'],['#050300','#9b7b1a'],
+    ['#040200','#8b6a14'],
+  ]},
+  luxury: { label:'高級感', base:[
+    ['#0e0700','#f0d98a'],['#080500','#fff9e6'],['#0a0600','#fff8dc'],
+    ['#060400','#f5e6a0'],['#090600','#f0d890'],['#0e0700','#e8d070'],
+    ['#080500','#fff8dc'],['#090600','#fff9e6'],['#0a0600','#fffff0'],
+    ['#060400','#f0d98a'],
+  ]},
+  elegant: { label:'上品', base:[
+    ['#6b4a0e','#e8d5b0'],['#7b5520','#f0e0c0'],['#6b5010','#edd8b4'],
+    ['#806820','#f5e8c8'],['#6a4c18','#e0d0a8'],['#503800','#f5e8c8'],
+    ['#4a3000','#f0e0c0'],['#3d2800','#edd8b4'],['#3a2600','#e8d5b0'],
+    ['#4a3000','#f5e8c8'],
+  ]},
+  futuristic: { label:'近未来的', base:[
+    ['#006060','#ffe566'],['#004080','#ffd700'],['#007060','#ffd700'],
+    ['#008080','#ffe566'],['#408080','#ffec73'],['#004060','#ffe566'],
+    ['#206060','#ffd700'],['#004080','#f0d98a'],['#408080','#ffe566'],
+    ['#007070','#ffd700'],
+  ]},
+  grace: { label:'優雅', base:[
+    ['#a07830','#f5e6d0'],['#8b6914','#fff0dc'],['#9b7820','#fae8cc'],
+    ['#9a7820','#f8e4c0'],['#a07830','#fdf0d8'],['#7b5a10','#fff0dc'],
+    ['#6b5010','#f5e6d0'],['#5a4500','#fae8cc'],['#6b4a0e','#f8e4c0'],
+    ['#6b4a0e','#fdf0d8'],
+  ]},
+  cool: { label:'涼しげ', base:[
+    ['#003060','#e0f0ff'],['#002850','#d0e8ff'],['#003858','#e8f4ff'],
+    ['#004068','#f0f8ff'],['#002840','#d8eeff'],['#003060','#e0f0ff'],
+    ['#002850','#d0e8ff'],['#003858','#e8f4ff'],['#004068','#f0f8ff'],
+    ['#002840','#d8eeff'],
+  ]},
 };
 
-// Mood modifiers: influence which stops get used and saturation
-const moods = {
-  glitter:   { stops: 'maxBright', sat: 1.2, contrast: 1.3, label: 'Pure Gold Glitter' },
-  adult:     { stops: 'dark',      sat: 0.7, contrast: 0.9, label: 'Sophisticated' },
-  calm:      { stops: 'shadow',    sat: 0.6, contrast: 0.8, label: 'Calm & Muted' },
-  vivid:     { stops: 'vivid',     sat: 1.3, contrast: 1.2, label: 'Vivid & Vibrant' },
-  heavy:     { stops: 'heavy',     sat: 0.8, contrast: 1.4, label: 'Heavy & Deep' },
-  luxury:    { stops: 'luxury',    sat: 1.0, contrast: 1.1, label: 'Luxurious' },
-  elegant:   { stops: 'elegant',   sat: 0.85,contrast: 1.0, label: 'Elegant' },
-  futuristic:{ stops: 'future',    sat: 0.6, contrast: 1.5, label: 'Near-Future' },
-  graceful:  { stops: 'graceful',  sat: 0.9, contrast: 0.95,label: 'Graceful' },
-  cool:      { stops: 'cool',      sat: 0.5, contrast: 0.85,label: 'Cool & Icy' },
-};
+const gradientNames = [
+  'Sovereign Gold','Gilded Crown','Molten Luxury','Autumn Sovereign',
+  'Imperial Shimmer','Royal Amber','Celestial Gold','Gilded Dawn',
+  'Arcane Lustre','Sacred Flame'
+];
 
-// ========================
-// STATE
-// ========================
-let state = {
-  mood: 'glitter',
-  type: 'yellow',
-  reflections: 2,
-  angle: 135,
-  direction: 'linear',
-};
+let currentMood = 'glamorous';
+let currentPattern = 'sandwich';
+let gradientDir = 'to right';
+let currentGradients = [];
+let activeCardIndex = -1;
 
-// ========================
-// GRADIENT GENERATION
-// ========================
-function generateStops(type, mood, reflections) {
-  const t = goldTypes[type];
-  const m = moods[mood];
-
-  // Build base palette based on mood
-  let palette;
-  switch(m.stops) {
-    case 'maxBright':
-      palette = [t.shadow[2], t.mid[0], t.bright[2], t.mid[2], t.bright[0], t.mid[1]];
-      break;
-    case 'dark':
-      palette = [t.dark[0], t.mid[0], t.dark[2], t.mid[1], t.dark[1]];
-      break;
-    case 'shadow':
-      palette = [t.shadow[0], t.dark[2], t.mid[0], t.dark[1], t.shadow[2]];
-      break;
-    case 'vivid':
-      palette = [t.mid[1], t.bright[2], t.mid[2], t.bright[0], t.mid[0], t.bright[1]];
-      break;
-    case 'heavy':
-      palette = [t.dark[0], t.shadow[0], t.mid[0], t.dark[2], t.shadow[2], t.dark[1]];
-      break;
-    case 'luxury':
-      palette = [t.dark[1], t.mid[0], t.bright[1], t.mid[2], t.dark[2], t.bright[0]];
-      break;
-    case 'elegant':
-      palette = [t.shadow[1], t.mid[0], t.bright[0], t.mid[1], t.shadow[2], t.bright[1]];
-      break;
-    case 'future':
-      palette = [t.dark[0], t.mid[0], t.bright[2], t.dark[2], t.bright[0], t.dark[1]];
-      break;
-    case 'graceful':
-      palette = [t.mid[0], t.bright[0], t.mid[2], t.bright[1], t.mid[1], t.bright[2]];
-      break;
-    case 'cool':
-      // Mix with blue-ish tint
-      palette = [t.shadow[1], t.dark[1], t.mid[0], t.dark[0], t.shadow[0]];
-      break;
+// Build gradient stops from [dark, light] base
+function buildStops(base, pattern) {
+  const [dark, light] = base;
+  switch(pattern) {
+    case 'simple':
+      return [{color:dark,pos:0},{color:light,pos:100}];
+    case 'sandwich':
+      return [{color:dark,pos:0},{color:light,pos:50},{color:dark,pos:100}];
+    case 'metallic':
+      return [
+        {color:dark,pos:0},{color:light,pos:20},
+        {color:dark,pos:45},{color:light,pos:70},{color:dark,pos:100}
+      ];
+    case 'offset':
+      return [{color:dark,pos:0},{color:light,pos:22},{color:dark,pos:100}];
+    case 'flash':
+      return [
+        {color:dark,pos:0},{color:dark,pos:20},
+        {color:light,pos:21},{color:light,pos:45},
+        {color:dark,pos:46},{color:dark,pos:70},
+        {color:light,pos:71},{color:light,pos:100}
+      ];
     default:
-      palette = [t.dark[0], t.mid[0], t.bright[1], t.mid[2], t.shadow[1]];
+      return [{color:dark,pos:0},{color:light,pos:100}];
   }
-
-  // Build reflection sequence
-  const stops = [];
-  const baseCount = palette.length;
-
-  for(let r = 0; r < reflections; r++) {
-    const reversed = r % 2 === 1;
-    for(let i = 0; i < baseCount; i++) {
-      const idx = reversed ? (baseCount - 1 - i) : i;
-      // Apply cool tint for 'cool' mood
-      let hex = palette[idx];
-      if(mood === 'cool') hex = addBlueTint(hex, 0.15);
-      if(mood === 'futuristic') hex = addBlueTint(hex, 0.08);
-      stops.push(hex);
-    }
-  }
-
-  // Normalize to avoid too many stops
-  const maxStops = 16;
-  if(stops.length > maxStops) {
-    const reduced = [];
-    const step = (stops.length - 1) / (maxStops - 1);
-    for(let i = 0; i < maxStops; i++) {
-      reduced.push(stops[Math.round(i * step)]);
-    }
-    return reduced;
-  }
-  return stops;
 }
 
-function addBlueTint(hex, amount) {
-  const r = parseInt(hex.slice(1,3), 16);
-  const g = parseInt(hex.slice(3,5), 16);
-  const b = parseInt(hex.slice(5,7), 16);
-  const nr = Math.round(r * (1 - amount));
-  const ng = Math.round(g * (1 - amount * 0.5));
-  const nb = Math.min(255, Math.round(b + (255 - b) * amount * 0.6));
-  return '#' + [nr,ng,nb].map(v => v.toString(16).padStart(2,'0')).join('');
+function stopsToCSS(stops, dir) {
+  const s = stops.map(s => `${s.color} ${s.pos}%`).join(', ');
+  if (dir === 'circle') return `radial-gradient(circle at center, ${s})`;
+  return `linear-gradient(${dir}, ${s})`;
 }
 
-function buildGradientCSS(stops, direction, angle) {
-  const stopsStr = stops.map((c, i) => `${c} ${Math.round(i / (stops.length-1) * 100)}%`).join(', ');
-  if(direction === 'linear') return `linear-gradient(${angle}deg, ${stopsStr})`;
-  if(direction === 'radial') return `radial-gradient(ellipse at center, ${stopsStr})`;
-  if(direction === 'conic') return `conic-gradient(from ${angle}deg, ${stopsStr})`;
+function uniqueColors(stops) {
+  const seen = new Set();
+  return stops.filter(s => { if(seen.has(s.color)) return false; seen.add(s.color); return true; }).map(s => s.color);
 }
 
-// ========================
-// RENDER
-// ========================
+function updatePatternPreviews() {
+  const demo = ['#3a2200','#e8c000'];
+  ['simple','sandwich','metallic','offset','flash'].forEach(p => {
+    const el = document.getElementById('prev-' + p);
+    if (!el) return;
+    el.style.background = stopsToCSS(buildStops(demo, p), 'to right');
+  });
+}
+
 function render() {
-  const stops = generateStops(state.type, state.mood, state.reflections);
-  const css = buildGradientCSS(stops, state.direction, state.angle);
+  const grid = document.getElementById('gradientGrid');
+  const pal = moodPalettes[currentMood];
+  currentGradients = pal.base.map((base, i) => ({
+    base, stops: buildStops(base, currentPattern), name: gradientNames[i], index: i
+  }));
 
-  document.getElementById('previewBox').style.background = css;
-
-  // Stops chips
-  const row = document.getElementById('stopsRow');
-  row.innerHTML = '';
-  // Show subset
-  const show = stops.length <= 8 ? stops : stops.filter((_,i) => i % Math.ceil(stops.length/8) === 0);
-  show.forEach(hex => {
-    const chip = document.createElement('div');
-    chip.className = 'stop-chip';
-    chip.title = 'クリックでコピー';
-    chip.innerHTML = `<div class="stop-dot" style="background:${hex}"></div>${hex}`;
-    chip.onclick = () => copyText(hex, hex + ' をコピーしました');
-    row.appendChild(chip);
+  grid.innerHTML = '';
+  currentGradients.forEach((g, i) => {
+    const css = stopsToCSS(g.stops, gradientDir);
+    const uc = uniqueColors(g.stops);
+    const card = document.createElement('div');
+    card.className = 'gradient-card';
+    card.innerHTML = `
+      <div class="gradient-preview" style="background:${css}" onclick="openPanel(${i})"></div>
+      <div class="card-info">
+        <div class="card-name">${g.name}</div>
+        <div class="card-swatches">
+          ${uc.map(c=>`<div class="swatch" style="background:${c}" onclick="copySingle('${c}')"><div class="swatch-tip">${c}</div></div>`).join('')}
+        </div>
+        <div class="card-actions">
+          <button class="btn-small" onclick="copyCSS(${i},this)">CSS</button>
+          <button class="btn-small" onclick="openPanel(${i})">詳細</button>
+          <button class="btn-small" onclick="downloadOneSVG(${i})">SVG</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
   });
 
-  // Code box
-  const fullCSS = `.gold-gradient {\n  background: ${css};\n}`;
-  document.getElementById('codeBox').textContent = fullCSS;
-
-  // Angle row visibility
-  document.getElementById('angleRow').style.display = state.direction === 'radial' ? 'none' : 'flex';
+  document.getElementById('currentMoodLabel').textContent = pal.label;
+  updatePatternPreviews();
 }
 
-// ========================
-// SETTERS
-// ========================
-function setMood(el) {
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  state.mood = el.dataset.mood;
-  render();
+function copyCSS(index, btn) {
+  const css = stopsToCSS(currentGradients[index].stops, gradientDir);
+  navigator.clipboard.writeText(`background: ${css};`);
+  const orig = btn.textContent;
+  btn.textContent = 'OK!';
+  btn.classList.add('copied');
+  showToast('CSS COPIED');
+  setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
 }
 
-function setType(el) {
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  state.type = el.dataset.type;
-  render();
+function copySingle(hex) {
+  navigator.clipboard.writeText(hex);
+  showToast(hex + ' COPIED');
 }
 
-function setRef(el) {
-  document.querySelectorAll('.ref-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  state.reflections = parseInt(el.dataset.ref);
-  render();
+function openPanel(index) {
+  activeCardIndex = index;
+  const g = currentGradients[index];
+  const css = stopsToCSS(g.stops, gradientDir);
+
+  document.getElementById('panelTitle').textContent = g.name;
+  document.getElementById('panelSub').textContent =
+    moodPalettes[currentMood].label + ' — ' + patternLabel(currentPattern);
+  document.getElementById('panelPreview').style.background = css;
+
+  document.getElementById('cssPre').textContent = `.element {\n  background: ${css};\n}`;
+  document.getElementById('varPre').textContent = `:root {\n  --gradient-gold: ${css};\n}\n\n.element {\n  background: var(--gradient-gold);\n}`;
+  document.getElementById('twPre').textContent = `style="background: ${css};"`;
+  document.getElementById('hexPre').textContent = g.stops.map((s,i)=>`Stop ${i+1}: ${s.color}  @ ${s.pos}%`).join('\n');
+
+  document.getElementById('panelOverlay').classList.add('open');
+  document.getElementById('panel').classList.add('open');
 }
 
-function setDir(el) {
-  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  state.direction = el.dataset.dir;
-  render();
+function copyCode(preId) {
+  navigator.clipboard.writeText(document.getElementById(preId).textContent);
+  showToast('COPIED');
 }
 
-function setAngle(val) {
-  state.angle = parseInt(val);
-  document.getElementById('angleVal').textContent = val + '°';
-  render();
+function closePanel() {
+  document.getElementById('panelOverlay').classList.remove('open');
+  document.getElementById('panel').classList.remove('open');
 }
 
-// ========================
-// COPY / EXPORT
-// ========================
-function copyText(text, msg) {
-  navigator.clipboard.writeText(text).then(() => showToast(msg || 'コピーしました'));
+function patternLabel(p) {
+  return {simple:'シンプル',sandwich:'サンドイッチ',metallic:'メタリック',offset:'非対称',flash:'フラッシュ'}[p]||p;
 }
 
-function copyCSS() {
-  const stops = generateStops(state.type, state.mood, state.reflections);
-  const css = buildGradientCSS(stops, state.direction, state.angle);
-  const fullCSS = `.gold-gradient {\n  background: ${css};\n}`;
-  copyText(fullCSS, 'CSS をコピーしました');
+function buildSVGDef(g, id, dir) {
+  const stops = g.stops.map(s=>`<stop offset="${s.pos}%" stop-color="${s.color}"/>`).join('');
+  if (dir === 'circle') return `<radialGradient id="${id}" cx="50%" cy="50%" r="50%">${stops}</radialGradient>`;
+  const cm = {'to right':[0,0,1,0],'to bottom':[0,0,0,1],'135deg':[0,0,1,1]};
+  const [x1,y1,x2,y2] = cm[dir]||[0,0,1,0];
+  return `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stops}</linearGradient>`;
 }
 
-function copyHex() {
-  const stops = generateStops(state.type, state.mood, state.reflections);
-  copyText(stops.join(', '), 'HEX カラーをコピーしました');
-}
-
-function downloadSVG() {
-  const stops = generateStops(state.type, state.mood, state.reflections);
-  const id = 'goldGrad';
-  let stopsXML = stops.map((c,i) =>
-    `<stop offset="${(i/(stops.length-1)*100).toFixed(1)}%" stop-color="${c}"/>`
-  ).join('\n    ');
-
-  const gradDef = state.direction === 'radial'
-    ? `<radialGradient id="${id}" cx="50%" cy="50%" r="50%">\n    ${stopsXML}\n  </radialGradient>`
-    : `<linearGradient id="${id}" x1="0%" y1="0%" x2="100%" y2="0%" gradientTransform="rotate(${state.angle - 90},0.5,0.5)">\n    ${stopsXML}\n  </linearGradient>`;
-
-  const moodLabel = moods[state.mood].label;
-  const typeLabel = document.querySelector('.type-btn.active').textContent.trim();
-
-  const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    ${gradDef}
-  </defs>
-  <!-- Gold Gradient: ${moodLabel} / ${typeLabel} / Reflections: ${state.reflections} -->
-  <rect x="0" y="0" width="800" height="200" fill="url(#${id})"/>
-</svg>`;
-
-  download('gold-gradient.svg', svg, 'image/svg+xml');
-  showToast('SVG をダウンロードしました — Illustratorで開けます');
-}
-
-function downloadASE() {
-  const stops = generateStops(state.type, state.mood, state.reflections);
-
-  // Build ASE binary
-  // ASE format: Adobe Swatch Exchange
-  // Signature: ASEF (4 bytes)
-  // Version: 1.0 (4 bytes: 0x00 0x01 0x00 0x00)
-  // Block count (4 bytes)
-  // Blocks: type(2) + length(4) + name(UTF-16BE + null) + color data
-
-  const encoder = new TextEncoder();
-  const blocks = [];
-
-  // Group start
-  const groupName = 'Gold Gradient';
-  const groupNameUTF16 = str2utf16be(groupName);
-  const groupBlock = buildASEBlock(0xC001, groupNameUTF16, null);
-  blocks.push(groupBlock);
-
-  stops.forEach((hex, i) => {
-    const name = `Gold ${i+1} ${hex}`;
-    const nameUTF16 = str2utf16be(name);
-    const r = parseInt(hex.slice(1,3),16)/255;
-    const g = parseInt(hex.slice(3,5),16)/255;
-    const b = parseInt(hex.slice(5,7),16)/255;
-    const colorData = buildRGBColorData(r, g, b);
-    blocks.push(buildASEBlock(0x0001, nameUTF16, colorData));
-  });
-
-  // Group end
-  blocks.push(buildASEBlock(0xC002, null, null));
-
-  const totalLen = blocks.reduce((a,b) => a + b.length, 0);
-  const buf = new Uint8Array(12 + totalLen);
-  // ASEF
-  buf[0]=0x41;buf[1]=0x53;buf[2]=0x45;buf[3]=0x46;
-  // Version 1.0
-  buf[4]=0x00;buf[5]=0x01;buf[6]=0x00;buf[7]=0x00;
-  // Block count
-  const blockCount = blocks.length;
-  buf[8]=(blockCount>>24)&0xff;
-  buf[9]=(blockCount>>16)&0xff;
-  buf[10]=(blockCount>>8)&0xff;
-  buf[11]=blockCount&0xff;
-
-  let off = 12;
-  blocks.forEach(b => { buf.set(b, off); off += b.length; });
-
-  const blob = new Blob([buf], {type:'application/octet-stream'});
-  const url = URL.createObjectURL(blob);
+function triggerDownload(content, filename, type) {
   const a = document.createElement('a');
-  a.href = url;
-  a.download = 'gold-gradient.ase';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('ASE スウォッチをダウンロードしました');
-}
-
-function str2utf16be(str) {
-  // Returns Uint8Array of UTF-16BE encoded string + null terminator
-  const arr = [];
-  for(let i=0;i<str.length;i++){
-    const c = str.charCodeAt(i);
-    arr.push((c>>8)&0xff, c&0xff);
-  }
-  arr.push(0,0); // null terminator
-  return new Uint8Array(arr);
-}
-
-function buildRGBColorData(r, g, b) {
-  // RGB\0 (4 bytes) + 3 floats (4 bytes each) + type (2 bytes: 0=global, 1=spot, 2=normal)
-  const buf = new ArrayBuffer(14);
-  const view = new DataView(buf);
-  // 'RGB '
-  view.setUint8(0, 0x52); view.setUint8(1, 0x47);
-  view.setUint8(2, 0x42); view.setUint8(3, 0x20);
-  view.setFloat32(4, r, false);
-  view.setFloat32(8, g, false);
-  view.setFloat32(12, b, false);
-  // type: 2 = normal (appended after)
-  // Actually type is 2 more bytes outside colorData in some readers
-  return new Uint8Array(buf);
-}
-
-function buildASEBlock(type, nameUTF16, colorData) {
-  // Block: type(2) + length(4) + [nameLength(2) + name(UTF16BE)] + [colorData + colorType(2)]
-  let bodyLen = 0;
-  if(nameUTF16) bodyLen += 2 + nameUTF16.length;
-  if(colorData) bodyLen += colorData.length + 2; // +2 for color type
-
-  const buf = new Uint8Array(6 + bodyLen);
-  const view = new DataView(buf.buffer);
-
-  view.setUint16(0, type, false);
-  view.setUint32(2, bodyLen, false);
-
-  let off = 6;
-  if(nameUTF16) {
-    const nameLen = nameUTF16.length / 2; // char count including null
-    view.setUint16(off, nameLen, false);
-    off += 2;
-    buf.set(nameUTF16, off);
-    off += nameUTF16.length;
-  }
-  if(colorData) {
-    buf.set(colorData, off);
-    off += colorData.length;
-    view.setUint16(off, 2, false); // 2 = normal
-    off += 2;
-  }
-  return buf;
-}
-
-function download(filename, text, mime) {
-  const blob = new Blob([text], {type: mime});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
+  a.href = URL.createObjectURL(new Blob([content],{type}));
   a.download = filename;
   a.click();
-  URL.revokeObjectURL(url);
 }
+
+function downloadOneSVG(index) {
+  const g = currentGradients[index];
+  const def = buildSVGDef(g, 'grd', gradientDir);
+  const uc = uniqueColors(g.stops);
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>${def}</defs>
+  <rect width="600" height="300" fill="url(#grd)"/>
+  <text x="300" y="264" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="rgba(255,255,255,0.55)" font-style="italic">${g.name}</text>
+  <text x="300" y="286" text-anchor="middle" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.35)">${uc.join(' · ')}</text>
+</svg>`;
+  triggerDownload(svg, `aurum-${currentMood}-${g.name.replace(/\s/g,'-').toLowerCase()}.svg`, 'image/svg+xml');
+  showToast('SVG EXPORTED');
+}
+
+document.getElementById('bulkSvgBtn').addEventListener('click', () => {
+  const cols=5, rows=2, cW=220, cH=250, pad=20, titleH=60;
+  const W = cols*(cW+pad)+pad, H = titleH+rows*(cH+pad)+pad;
+  const defs = currentGradients.map((g,i)=>buildSVGDef(g,`g${i}`,gradientDir)).join('\n');
+  const rects = currentGradients.map((g,i)=>{
+    const col=i%cols, row=Math.floor(i/cols);
+    const x=pad+col*(cW+pad), y=titleH+pad+row*(cH+pad);
+    const ph=cH-48;
+    const uc=uniqueColors(g.stops);
+    return `<rect x="${x}" y="${y}" width="${cW}" height="${ph}" fill="url(#g${i})" rx="4"/>
+  <text x="${x+cW/2}" y="${y+ph+20}" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#C9A84C" font-style="italic">${g.name}</text>
+  <text x="${x+cW/2}" y="${y+ph+38}" text-anchor="middle" font-family="monospace" font-size="9" fill="#5a4a1a">${uc.join(' · ')}</text>`;
+  }).join('\n');
+  const mood = moodPalettes[currentMood].label;
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+  <rect width="${W}" height="${H}" fill="#0a0905"/>
+  <text x="${W/2}" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#C9A84C" letter-spacing="6">AURUM</text>
+  <text x="${W/2}" y="54" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#5a4a1a" letter-spacing="4">${mood}  ·  ${patternLabel(currentPattern)}</text>
+  <defs>${defs}</defs>
+  ${rects}
+</svg>`;
+  triggerDownload(svg, `aurum-${currentMood}-${currentPattern}.svg`, 'image/svg+xml');
+  showToast('10 GRADIENTS EXPORTED');
+});
 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2200);
 }
 
-// Init
+// Events
+document.getElementById('moodGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.mood-btn');
+  if (!btn) return;
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMood = btn.dataset.mood;
+  render();
+});
+
+document.getElementById('patternGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.pattern-btn');
+  if (!btn) return;
+  document.querySelectorAll('.pattern-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentPattern = btn.dataset.pattern;
+  render();
+});
+
+document.querySelectorAll('.dir-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.dir-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    gradientDir = btn.dataset.dir;
+    if (activeCardIndex >= 0) {
+      const g = currentGradients[activeCardIndex];
+      document.getElementById('panelPreview').style.background = stopsToCSS(g.stops, gradientDir);
+    }
+    render();
+  });
+});
+
+document.getElementById('panelClose').addEventListener('click', closePanel);
+document.getElementById('panelOverlay').addEventListener('click', closePanel);
+
 render();
 </script>
 </body>
