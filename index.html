@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Gradient Tool</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f0f0; padding: 40px; }
+        .preview-box { width: 100%; max-width: 500px; height: 200px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 4px solid #fff; }
+        .controls { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; }
+        button { padding: 10px 20px; margin: 5px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        button:hover { background: #eee; }
+        button.active { border-color: #d4af37; background: #fffdf0; font-weight: bold; }
+        .code-output { margin-top: 20px; background: #333; color: #fff; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 0.9em; width: 100%; max-width: 500px; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <h2>ゴールドの種類を選択</h2>
+
+    <div id="preview" class="preview-box"></div>
+
+    <div class="controls">
+        <button onclick="updateGradient('vivid', this)" class="active">ギラギラ（純金）</button>
+        <button onclick="updateGradient('elegant', this)">大人っぽい（シャンパン）</button>
+        <button onclick="updateGradient('matte', this)">落ち着いた（マット）</button>
+    </div>
+
+    <div id="code" class="code-output"></div>
+
+    <script>
+        // プリセットデータの定義
+        const presets = {
+            vivid: {
+                name: "ギラギラ（純金）",
+                colors: ["#bf953f", "#fcf6ba", "#b38728", "#fbf5b7", "#aa771c"],
+                angle: "135deg"
+            },
+            elegant: {
+                name: "大人っぽい（シャンパン）",
+                colors: ["#e7d192", "#f7e7ce", "#e7d192"],
+                angle: "135deg"
+            },
+            matte: {
+                name: "落ち着いた（マット）",
+                colors: ["#a67c00", "#bf9b30"],
+                angle: "135deg"
+            }
+        };
+
+        function updateGradient(type, btn) {
+            const data = presets[type];
+            const preview = document.getElementById('preview');
+            const codeBox = document.getElementById('code');
+
+            // グラデーション文字列の作成
+            const gradientStr = `linear-gradient(${data.angle}, ${data.colors.join(', ')})`;
+            
+            // プレビューに反映
+            preview.style.background = gradientStr;
+            
+            // コードを表示
+            codeBox.innerText = `background: ${gradientStr};`;
+
+            // ボタンのスタイル更新
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // 初期表示
+        window.onload = () => {
+            updateGradient('vivid', document.querySelector('button'));
+        };
+    </script>
+</body>
+</html>
