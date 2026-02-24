@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>女性向け LP デザインスタジオ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Josefin+Sans:wght@100;300;400&family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;1,400&family=Jost:wght@200;300;400;500&family=Raleway:wght@200;300;400;500&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sidebar-w: 280px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: #0e0e0e;
+  color: #fff;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width: var(--sidebar-w);
+  height: 100vh;
+  overflow-y: auto;
+  background: #111213;
+  border-right: 1px solid #1f1f1f;
+  flex-shrink: 0;
+  padding: 20px 16px 48px;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a2a transparent;
+}
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+.sb-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  color: #ccc;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #1f1f1f;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sb-logo span { opacity: 0.5; font-size: 11px; }
+
+.sb-section {
+  font-size: 8.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #444;
+  margin: 20px 0 10px;
+}
+
+/* Color swatches */
+.color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.cp {
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .2s, transform .2s;
+  aspect-ratio: 5/3;
+  position: relative;
+}
+.cp:hover { transform: scale(1.04); }
+.cp.active { border-color: rgba(255,255,255,0.7); }
+.cp-inner { display: flex; width: 100%; height: 100%; }
+.cp-swatch { flex: 1; height: 100%; }
+.cp-name {
+  position: absolute;
+  bottom: 5px; left: 0; right: 0;
+  text-align: center;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+/* Font list */
+.font-list { display: flex; flex-direction: column; gap: 6px; }
+.fp {
+  padding: 10px 12px;
+  background: #191a1b;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .2s, background .2s;
+}
+.fp:hover { background: #1f2021; }
+.fp.active { border-color: rgba(255,255,255,0.5); }
+.fp-text { font-size: 20px; line-height: 1.2; color: #e8e8e8; margin-bottom: 2px; }
+.fp-meta { font-size: 8.5px; letter-spacing: 0.15em; color: #484848; }
+
+/* Anim grid */
+.anim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ap {
+  padding: 12px 8px;
+  background: #191a1b;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+  transition: border-color .2s, background .2s;
+}
+.ap:hover { background: #1f2021; }
+.ap.active { border-color: rgba(255,255,255,0.5); }
+.ap-icon { font-size: 18px; margin-bottom: 4px; }
+.ap-name { font-size: 8px; letter-spacing: 0.1em; color: #888; text-transform: uppercase; }
+
+.btn-refresh {
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #888;
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all .2s;
+}
+.btn-refresh:hover { background: #1a1a1a; color: #ccc; border-color: #444; }
+
+.btn-copy-palette {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #666;
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-copy-palette:hover { background: #1a1a1a; color: #aaa; border-color: #3a3a3a; }
+.btn-copy-palette.copied { border-color: #4a7a5a; color: #6aaa7a; background: rgba(74,122,90,0.08); }
+
+/* ─── PREVIEW AREA ─── */
+.preview-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #1a1a1a;
+  flex-shrink: 0;
+}
+
+.device-toggle {
+  display: flex;
+  background: #161616;
+  border: 1px solid #222;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.db {
+  padding: 7px 16px;
+  background: transparent;
+  border: none;
+  color: #555;
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all .2s;
+}
+.db.active { background: #242424; color: #ddd; }
+
+.preview-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.frame-stage {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transition: all .4s var(--ease);
+}
+
+.lp-frame {
+  width: 100%;
+  max-width: 920px;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+  transition: max-width .5s var(--ease), border-radius .3s;
+  position: relative;
+}
+.lp-frame.mobile {
+  max-width: 390px;
+  border-radius: 32px;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 6px #1a1a1a, 0 0 0 7px #333;
+}
+.lp-frame.mobile::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 50%; transform: translateX(-50%);
+  width: 70px; height: 5px;
+  background: #333;
+  border-radius: 3px;
+  z-index: 200;
+}
+
+.lp-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+.lp-scroll::-webkit-scrollbar { width: 3px; }
+.lp-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); }
+
+/* ─── LP INTERNAL STYLES ─── */
+.lp-wrap { font-size: 14px; }
+
+/* LP sections inner container for desktop centering */
+.lp-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Full-bleed sections still need inner container */
+.lp-hero .lp-inner,
+.lp-cta-band .lp-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* NAV */
+.lp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.lp-nav-logo { font-size: 14px; letter-spacing: 0.28em; font-weight: 300; }
+.hamburger { width: 20px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+.hamburger span { display: block; height: 1px; background: currentColor; border-radius: 1px; }
+.hamburger span:last-child { width: 70%; }
+
+/* HERO */
+.lp-hero {
+  padding: 80px 24px 64px;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  position: relative;
+  overflow: hidden;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.hero-h1 {
+  font-size: clamp(22px, 6vw, 58px);
+  line-height: 1.15;
+  font-weight: 400;
+  margin-bottom: 20px;
+  max-width: 540px;
+}
+.hero-h1 em { font-style: italic; }
+@media (min-width: 600px) {
+  .hero-h1 { font-size: clamp(34px, 7vw, 58px); }
+}
+.hero-p {
+  font-size: 14px;
+  line-height: 1.85;
+  max-width: 400px;
+  opacity: 0.72;
+  margin-bottom: 36px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary {
+  padding: 13px 32px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: opacity .2s, transform .2s;
+}
+.btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-ghost {
+  padding: 13px 24px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  background: transparent;
+  font-family: inherit;
+  transition: all .2s;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  opacity: 0.45;
+}
+.scroll-line { width: 32px; height: 1px; background: currentColor; }
+
+/* TRUST BAR */
+.trust-bar {
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  overflow-x: auto;
+}
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+.trust-num { font-size: 20px; font-weight: 300; letter-spacing: -0.02em; }
+.trust-label { font-size: 8.5px; letter-spacing: 0.12em; opacity: 0.6; text-transform: uppercase; white-space: nowrap; }
+.trust-divider { width: 1px; height: 30px; opacity: 0.15; background: currentColor; flex-shrink: 0; }
+
+/* INTRO / CONCEPT */
+.lp-concept { padding: 64px 24px; }
+.eyebrow { font-size: 9.5px; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.55; margin-bottom: 14px; }
+.section-h2 {
+  font-size: clamp(18px, 4.5vw, 40px);
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+@media (min-width: 600px) {
+  .section-h2 { font-size: clamp(24px, 5vw, 40px); }
+}
+.concept-body {
+  font-size: 13.5px;
+  line-height: 1.9;
+  opacity: 0.75;
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+.concept-img-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.concept-img-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  opacity: 0.3;
+}
+
+/* CAROUSEL */
+.lp-carousel-section { padding: 56px 0 64px; }
+.carousel-header { padding: 0 24px; margin-bottom: 28px; }
+.carousel-track-wrap { overflow: hidden; position: relative; }
+.carousel-track {
+  display: flex;
+  gap: 14px;
+  padding: 0 24px 4px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  transition: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track:active { cursor: grabbing; }
+.carousel-card {
+  flex-shrink: 0;
+  width: calc(100vw - 80px);
+  max-width: 260px;
+  border-radius: 10px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transition: transform .3s;
+}
+.carousel-card:hover { transform: translateY(-3px); }
+.card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  position: relative;
+}
+.card-body { padding: 16px; }
+.card-tag { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.55; margin-bottom: 7px; }
+.card-title { font-size: 16px; font-weight: 400; margin-bottom: 8px; line-height: 1.3; }
+.card-desc { font-size: 12px; line-height: 1.75; opacity: 0.68; }
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 0 24px;
+}
+.cdot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.25;
+  cursor: pointer;
+  transition: all .25s;
+  flex-shrink: 0;
+}
+.cdot.active { opacity: 1; width: 20px; border-radius: 3px; }
+
+/* FEATURES */
+.lp-features { padding: 56px 24px 64px; }
+.features-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+.feature-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 10px;
+}
+.feature-num { font-size: 11px; letter-spacing: 0.12em; opacity: 0.4; padding-top: 2px; flex-shrink: 0; }
+.feature-content {}
+.feature-h { font-size: 16px; font-weight: 400; margin-bottom: 8px; }
+.feature-p { font-size: 12.5px; line-height: 1.8; opacity: 0.7; }
+
+/* STEPS */
+.lp-steps { padding: 56px 24px 64px; }
+.steps-list { display: flex; flex-direction: column; gap: 0; margin-top: 36px; }
+.step-item {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 32px;
+  position: relative;
+}
+.step-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 32px;
+  bottom: 0;
+  width: 1px;
+  background: currentColor;
+  opacity: 0.15;
+}
+.step-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  font-weight: 300;
+}
+.step-body {}
+.step-h { font-size: 16px; font-weight: 400; margin-bottom: 8px; padding-top: 4px; }
+.step-p { font-size: 12.5px; line-height: 1.8; opacity: 0.7; }
+
+/* VOICE / TESTIMONIAL CAROUSEL */
+.lp-voices { padding: 56px 0 64px; }
+.voice-header { padding: 0 24px; margin-bottom: 28px; }
+.voice-track-wrap { overflow: hidden; }
+.voice-track {
+  display: flex;
+  gap: 14px;
+  padding: 0 24px 4px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+}
+.voice-track::-webkit-scrollbar { display: none; }
+.voice-track:active { cursor: grabbing; }
+.voice-card {
+  flex-shrink: 0;
+  width: calc(100vw - 64px);
+  max-width: 320px;
+  border-radius: 12px;
+  padding: 24px;
+  scroll-snap-align: start;
+}
+.voice-stars { font-size: 12px; margin-bottom: 12px; letter-spacing: 2px; }
+.voice-text { font-size: 13.5px; line-height: 1.85; opacity: 0.82; margin-bottom: 18px; font-style: italic; }
+.voice-author { display: flex; align-items: center; gap: 10px; }
+.voice-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.voice-name { font-size: 12px; font-weight: 400; }
+.voice-meta { font-size: 10px; opacity: 0.5; margin-top: 2px; letter-spacing: 0.08em; }
+
+/* PRICE */
+.lp-price { padding: 56px 24px 64px; }
+.price-cards { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+.price-card {
+  border-radius: 12px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.price-card.popular {
+  transform: scale(1.0);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.price-badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+.price-plan { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.55; margin-bottom: 10px; }
+.price-amount { font-size: 38px; font-weight: 300; line-height: 1; margin-bottom: 4px; }
+.price-amount sup { font-size: 16px; vertical-align: top; margin-top: 6px; display: inline-block; }
+.price-amount sub { font-size: 14px; opacity: 0.6; }
+.price-desc { font-size: 12px; opacity: 0.65; margin-bottom: 20px; line-height: 1.7; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.price-features li { font-size: 12.5px; display: flex; align-items: center; gap: 8px; opacity: 0.8; }
+.price-features li::before { content: '✓'; font-size: 11px; flex-shrink: 0; }
+
+/* FAQ / ACCORDION */
+.lp-faq { padding: 56px 24px 64px; }
+.faq-list { margin-top: 32px; border-top: 1px solid; }
+.faq-item { border-bottom: 1px solid; }
+.faq-q {
+  width: 100%;
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: inherit;
+  gap: 16px;
+}
+.faq-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+  transition: transform .3s var(--ease);
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s var(--ease), padding .3s;
+}
+.faq-a-inner {
+  padding-bottom: 18px;
+  font-size: 13px;
+  line-height: 1.85;
+  opacity: 0.72;
+}
+
+/* CTA BAND */
+.lp-cta-band {
+  padding: 64px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-band-deco {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.12;
+}
+.cta-band-eyebrow { font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; opacity: 0.65; margin-bottom: 16px; }
+.cta-band-h { font-size: clamp(26px, 6vw, 44px); font-weight: 400; line-height: 1.2; margin-bottom: 14px; }
+.cta-band-p { font-size: 13px; opacity: 0.7; margin-bottom: 32px; line-height: 1.75; max-width: 400px; margin-left: auto; margin-right: auto; }
+.cta-band-actions { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.btn-white {
+  padding: 14px 36px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: opacity .2s, transform .2s;
+  width: 100%;
+  max-width: 280px;
+}
+.btn-white:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-outline-white {
+  padding: 13px 36px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  background: transparent;
+  font-family: inherit;
+  transition: all .2s;
+  width: 100%;
+  max-width: 280px;
+}
+.guarantee { font-size: 11px; opacity: 0.5; margin-top: 14px; letter-spacing: 0.08em; }
+
+/* MEDIA / PRESS */
+.lp-press { padding: 40px 24px; }
+.press-label { text-align: center; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.4; margin-bottom: 20px; }
+.press-logos { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px 28px; }
+.press-logo { font-size: 13px; letter-spacing: 0.15em; opacity: 0.35; font-weight: 300; }
+
+/* FOOTER */
+.lp-footer {
+  padding: 40px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.footer-brand { font-size: 16px; letter-spacing: 0.28em; font-weight: 300; }
+.footer-desc { font-size: 12px; opacity: 0.55; line-height: 1.75; max-width: 280px; margin-top: 8px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.footer-link { font-size: 11px; letter-spacing: 0.12em; opacity: 0.5; text-decoration: none; color: inherit; }
+.footer-bottom {
+  border-top: 1px solid;
+  padding-top: 16px;
+  font-size: 10px;
+  opacity: 0.35;
+  letter-spacing: 0.08em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes bloom { from { opacity:0; transform:scale(0.88) rotate(-1.5deg); filter:blur(4px); } to { opacity:1; transform:scale(1) rotate(0); filter:blur(0); } }
+@keyframes slideR { from { opacity:0; transform:translateX(-32px); } to { opacity:1; transform:translateX(0); } }
+@keyframes shimmer { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+@keyframes gradMove { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+
+.anim-fadeup .hero-badge { animation: fadeUp .7s var(--ease) both; }
+.anim-fadeup .hero-h1 { animation: fadeUp .75s var(--ease) .1s both; }
+.anim-fadeup .hero-p { animation: fadeUp .75s var(--ease) .22s both; }
+.anim-fadeup .hero-actions { animation: fadeUp .7s var(--ease) .34s both; }
+
+.anim-bloom .hero-h1 { animation: bloom 1s var(--ease) both; }
+.anim-bloom .hero-p { animation: bloom 1s var(--ease) .2s both; }
+.anim-bloom .hero-actions { animation: bloom .9s var(--ease) .35s both; }
+.anim-bloom .hero-badge { animation: fadeIn .6s ease both; }
+
+.anim-slide .hero-badge { animation: slideR .65s var(--ease) both; }
+.anim-slide .hero-h1 { animation: slideR .7s var(--ease) .12s both; }
+.anim-slide .hero-p { animation: slideR .7s var(--ease) .24s both; }
+.anim-slide .hero-actions { animation: slideR .65s var(--ease) .36s both; }
+
+.anim-float .hero-h1 { animation: float 5s ease-in-out infinite; }
+.anim-float .hero-p { animation: float 6s ease-in-out .5s infinite; }
+
+.anim-shimmer .hero-h1 {
+  background: linear-gradient(90deg, currentColor 0%, rgba(255,255,255,0.35) 50%, currentColor 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3.5s linear infinite;
+}
+
+.lp-hero.anim-gradient {
+  background-size: 220% 220% !important;
+  animation: gradMove 9s ease infinite;
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">✦ LP Studio <span>v2</span></div>
+
+  <div class="sb-section">配色プリセット</div>
+  <div class="color-grid" id="colorGrid"></div>
+  <button class="btn-copy-palette" id="btnCopyPalette" onclick="copyPalette()">
+    <span id="copyPaletteIcon">⊞</span> カラーコードをコピー
+  </button>
+
+  <div class="sb-section">フォントプリセット</div>
+  <div class="font-list" id="fontList"></div>
+
+  <div class="sb-section">アニメーション</div>
+  <div class="anim-grid" id="animGrid"></div>
+
+  <button class="btn-refresh" onclick="hardRefresh()">↺ アニメーション再生</button>
+</aside>
+
+<!-- PREVIEW AREA -->
+<div class="preview-area">
+  <div class="preview-toolbar">
+    <div class="preview-label">プレビュー</div>
+    <div class="device-toggle">
+      <button class="db active" onclick="setDevice('desktop',this)">DESKTOP</button>
+      <button class="db" onclick="setDevice('mobile',this)">MOBILE</button>
+    </div>
+    <div style="width:80px"></div>
+  </div>
+  <div class="frame-stage">
+    <div class="lp-frame" id="lpFrame">
+      <div class="lp-scroll" id="lpScroll">
+        <div id="lpContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════
+//  DATA
+// ═══════════════════════════════
+
+const COLOR_PRESETS = [
+  {
+    name: 'オールドローズ',
+    bg: '#F9F4F2', text: '#2C1F1C', accent: '#A07060',
+    accentBg: '#A07060', accentText: '#FAF6F4',
+    card: '#F0E8E4', cardBorder: '#E4D6D0',
+    heroGrad: 'linear-gradient(150deg,#F9F4F2 0%,#F2E9E4 60%,#EDE0D8 100%)',
+    badge: '#F0E8E4', badgeBorder: '#D4BEB4',
+    step: '#E8DDD8', nav: 'rgba(249,244,242,0.88)',
+    deco1: '#E4CFC8', deco2: '#C8A89C',
+  },
+  {
+    name: 'シャンパン',
+    bg: '#FAF8F2', text: '#26211A', accent: '#9A7E52',
+    accentBg: '#9A7E52', accentText: '#FDFAF4',
+    card: '#F2EDE0', cardBorder: '#E4D8C0',
+    heroGrad: 'linear-gradient(150deg,#FAF8F2 0%,#F4EDD8 60%,#EDE6CC 100%)',
+    badge: '#F2EDE0', badgeBorder: '#D4C49C',
+    step: '#E8E0CC', nav: 'rgba(250,248,242,0.88)',
+    deco1: '#E0D4B4', deco2: '#C4AE84',
+  },
+  {
+    name: 'モーヴグレー',
+    bg: '#F6F4F6', text: '#221E26', accent: '#7A6880',
+    accentBg: '#7A6880', accentText: '#F8F4FA',
+    card: '#EDE8F0', cardBorder: '#DDD4E4',
+    heroGrad: 'linear-gradient(150deg,#F6F4F6 0%,#EDE6F2 60%,#E4DAEC 100%)',
+    badge: '#EDE8F0', badgeBorder: '#CABCD4',
+    step: '#E4DCE8', nav: 'rgba(246,244,246,0.88)',
+    deco1: '#D8CCDC', deco2: '#B0A0B8',
+  },
+  {
+    name: 'テラコッタ',
+    bg: '#F8F4F0', text: '#261E18', accent: '#8C6448',
+    accentBg: '#8C6448', accentText: '#FAF6F2',
+    card: '#F0E8E0', cardBorder: '#E0D0C0',
+    heroGrad: 'linear-gradient(150deg,#F8F4F0 0%,#F0E4D8 60%,#E8D8C8 100%)',
+    badge: '#F0E8E0', badgeBorder: '#D0B8A4',
+    step: '#E8DED4', nav: 'rgba(248,244,240,0.88)',
+    deco1: '#DDD0C0', deco2: '#C0A888',
+  },
+  {
+    name: 'グレイッシュグリーン',
+    bg: '#F2F4F0', text: '#1A221C', accent: '#5E7864',
+    accentBg: '#5E7864', accentText: '#F4FAF5',
+    card: '#E4ECE6', cardBorder: '#CDD8D0',
+    heroGrad: 'linear-gradient(150deg,#F2F4F0 0%,#E4ECDE 60%,#D8E8D4 100%)',
+    badge: '#E4ECE6', badgeBorder: '#AECAB4',
+    step: '#DCE8DE', nav: 'rgba(242,244,240,0.88)',
+    deco1: '#D0DDD0', deco2: '#A4C0A8',
+  },
+  {
+    name: 'インクナイト',
+    bg: '#141618', text: '#EAE8E4', accent: '#C8A88C',
+    accentBg: '#C8A88C', accentText: '#1A1610',
+    card: 'rgba(255,255,255,0.05)', cardBorder: 'rgba(255,255,255,0.09)',
+    heroGrad: 'linear-gradient(150deg,#141618 0%,#1C1A1E 60%,#181416 100%)',
+    badge: 'rgba(200,168,140,0.14)', badgeBorder: 'rgba(200,168,140,0.3)',
+    step: 'rgba(255,255,255,0.04)', nav: 'rgba(20,22,24,0.9)',
+    deco1: '#2A2420', deco2: '#3C3028', dark: true,
+  },
+  {
+    name: 'ミッドナイトブルー',
+    bg: '#10141E', text: '#E4E8F0', accent: '#8AACCA',
+    accentBg: '#8AACCA', accentText: '#0C1220',
+    card: 'rgba(255,255,255,0.05)', cardBorder: 'rgba(255,255,255,0.09)',
+    heroGrad: 'linear-gradient(150deg,#10141E 0%,#141A28 60%,#10141C 100%)',
+    badge: 'rgba(138,172,202,0.14)', badgeBorder: 'rgba(138,172,202,0.3)',
+    step: 'rgba(255,255,255,0.04)', nav: 'rgba(16,20,30,0.9)',
+    deco1: '#1C2234', deco2: '#28304A', dark: true,
+  },
+  {
+    name: 'ウォームグレー',
+    bg: '#F5F3F0', text: '#1E1C1A', accent: '#6E6560',
+    accentBg: '#6E6560', accentText: '#FAF8F6',
+    card: '#EAE6E2', cardBorder: '#D8D2CC',
+    heroGrad: 'linear-gradient(150deg,#F5F3F0 0%,#EDE8E4 60%,#E8E2DC 100%)',
+    badge: '#EAE6E2', badgeBorder: '#C8C0B8',
+    step: '#E4DFDA', nav: 'rgba(245,243,240,0.88)',
+    deco1: '#D8D2CC', deco2: '#B4ACA4',
+  },
+];
+
+const FONT_PRESETS = [
+  { name:'Playfair Display', sub:'エレガントセリフ', heading:"'Playfair Display',serif", body:"'Jost',sans-serif", display:"'Playfair Display',serif", italic:true },
+  { name:'Cormorant Garamond', sub:'ラグジュアリー', heading:"'Cormorant Garamond',serif", body:"'Raleway',sans-serif", display:"'Cormorant Garamond',serif" },
+  { name:'DM Serif Display', sub:'モダンエディトリアル', heading:"'DM Serif Display',serif", body:"'Josefin Sans',sans-serif", display:"'DM Serif Display',serif", italic:true },
+  { name:'Libre Baskerville', sub:'クラシックエレガント', heading:"'Libre Baskerville',serif", body:"'Raleway',sans-serif", display:"'Libre Baskerville',serif" },
+  { name:'Josefin Sans', sub:'ジオメトリック', heading:"'Josefin Sans',sans-serif", body:"'Jost',sans-serif", display:"'Josefin Sans',sans-serif", light:true },
+  { name:'源ノ明朝 JP', sub:'和モダン', heading:"'Noto Serif JP',serif", body:"'Jost',sans-serif", display:"'Noto Serif JP',serif" },
+];
+
+const ANIM_PRESETS = [
+  { id:'fadeup', icon:'↑', name:'フェードアップ' },
+  { id:'bloom', icon:'❀', name:'ブルーム' },
+  { id:'slide', icon:'→', name:'スライドイン' },
+  { id:'float', icon:'◇', name:'フロート' },
+  { id:'shimmer', icon:'✦', name:'シマー' },
+  { id:'none', icon:'◻', name:'なし' },
+];
+
+let ci = 0, fi = 0, ai = 0;
+
+// ═══════════════════════════════
+//  LP CONTENT DATA
+// ═══════════════════════════════
+
+const LP_COPY = [
+  { brand:'LUMIÈRE', tagline:'Premium Beauty', h1:'あなたの輝きを<br><em>内側から</em>解き放つ', sub:'本物の美しさは外見だけでなく、内から溢れるもの。上質なケアで毎日をもっと輝かせましょう。', cta1:'今すぐ体験する', cta2:'詳しく見る', concept_h:'美とは、内側からの輝き', concept_p:'長年の研究から生まれたスキンケアシステムは、肌の奥深くに働きかけます。天然由来成分と最先端技術を融合させ、あなただけの美しさを引き出します。' },
+  { brand:'CÉLESTE', tagline:'Luxury Lifestyle', h1:'上質な暮らしを<br><em>あなたの日常</em>へ', sub:'洗練されたデザインと本物の機能美。忙しい毎日にとっておきのひとときを届けます。', cta1:'ご予約はこちら', cta2:'コレクションを見る', concept_h:'選ばれた素材と職人の技', concept_p:'世界中から厳選した素材と、熟練した職人の手仕事が融合。妥協のない品質で、あなたの暮らしをワンランク上へと導きます。' },
+  { brand:'AURÉLIA', tagline:'Inner Wellness', h1:'心とからだの<br><em>バランス</em>を整える', sub:'ウェルネスの本質は、外見と内面の調和。あなたの心身に寄り添うプログラムをご提供します。', cta1:'無料相談を予約', cta2:'プログラムを見る', concept_h:'ホリスティックなアプローチ', concept_p:'心・身体・精神の三位一体を大切に。科学的根拠に基づいたウェルネスプログラムで、本来のあなたらしさを取り戻します。' },
+  { brand:'FLORÈA', tagline:'Skin Ritual', h1:'毎日のリチュアルを<br><em>特別な時間</em>に', sub:'スキンケアは義務ではなく、自分を慈しむ時間。心地よい香りと感触で、一日の始まりを豊かに。', cta1:'ルーティンを始める', cta2:'成分を確認する', concept_h:'植物の力を科学する', concept_p:'自然界に宿る植物エキスと、現代科学の融合。100%天然由来の成分のみを使用し、肌本来の力を引き出します。' },
+];
+
+const FEATURES = [
+  [ { h:'厳選天然成分', p:'世界各地から集めた最高品質の天然成分のみを使用。肌への優しさと高い効果を両立します。' }, { h:'パーソナルケア', p:'あなたの肌状態や生活習慣を分析し、最適なケアプランをプロが提案します。' }, { h:'サステナブル', p:'環境と肌に優しい製品づくりで、美しさと持続可能な未来を両立します。' } ],
+  [ { h:'プレミアム品質', p:'職人が手がける一点一点に、妥協のない品質管理を徹底しています。' }, { h:'ライフスタイル提案', p:'製品だけでなく、あなたのライフスタイル全体をサポートします。' }, { h:'会員限定特典', p:'メンバーには先行販売や限定イベントへの招待など特別な体験をご用意。' } ],
+  [ { h:'科学的アプローチ', p:'最新の研究に基づいたプログラムで、確かな効果を実感できます。' }, { h:'専門家サポート', p:'栄養士・トレーナー・メンタルコーチがチームであなたをサポートします。' }, { h:'継続的な成長', p:'3ヶ月・6ヶ月の長期プログラムで、着実な変化と成長を実感できます。' } ],
+  [ { h:'植物由来100%', p:'合成着色料・防腐剤・鉱物油不使用。安心してお使いいただける成分のみ。' }, { h:'皮膚科テスト済み', p:'日本の皮膚科学会認定医の監修のもと、全製品の安全性を確認しています。' }, { h:'香りのデザイン', p:'気分を高めるアロマを取り入れ、スキンケアの時間を五感で楽しめます。' } ],
+];
+
+const STEPS = [
+  [ { h:'カウンセリング', p:'お肌の状態や悩みをヒアリング。あなたに最適なプランをご提案します。' }, { h:'カスタマイズ', p:'肌タイプ・生活習慣・目標に合わせてプログラムをカスタマイズします。' }, { h:'スタート', p:'専任スタッフがサポートしながら、新しいルーティンを一緒に始めます。' }, { h:'フォローアップ', p:'定期的なチェックインで効果を確認しながら、プランを最適化します。' } ],
+  [ { h:'お問い合わせ', p:'ウェブフォームまたはお電話でお気軽にご連絡ください。' }, { h:'ご相談・選定', p:'スタイリストとの個別相談で、あなたにぴったりのアイテムを選びます。' }, { h:'ご購入・お届け', p:'丁寧に梱包し、専用ボックスでお届けします。' } ],
+  [ { h:'体験カウンセリング', p:'無料の初回カウンセリングで、現在の状態と目標をお聞きします。' }, { h:'プログラム開始', p:'パーソナライズされたウェルネスプランがスタートします。' }, { h:'定期サポート', p:'週1回のチェックインで進捗を確認し、必要に応じてプランを調整します。' }, { h:'ゴール達成', p:'3〜6ヶ月後に目標を達成。その後のメンテナンスプランも充実。' } ],
+  [ { h:'サンプルを試す', p:'まずは無料サンプルセットをお試しください。肌への合いを確かめてから。' }, { h:'全商品を体験', p:'気に入ったらフルサイズをご購入。定期便でお得にご利用いただけます。' }, { h:'ルーティン確立', p:'専任スタッフが理想のスキンケアルーティン確立をサポートします。' } ],
+];
+
+const VOICES = [
+  '使い始めて3ヶ月、肌のトーンが明らかに変わりました。友人にも「最近肌きれいだね」と言われるように。',
+  '忙しくて自分のことを後回しにしていたけど、ここで習慣を変えました。朝のルーティンが楽しみになっています。',
+  '成分にこだわりがあるので、ずっと合うものを探していました。やっと見つけた、という感じです。',
+  '肌荒れしやすい敏感肌ですが、全くトラブルなく使えています。テクスチャーも香りも大好きです。',
+  'カウンセリングが丁寧で、私の悩みをきちんと聞いてくれました。押し売り感が全くなかったのも好印象。',
+];
+
+const VOICE_NAMES = ['田中 美咲 / 35歳', '山田 花子 / 28歳', '佐藤 玲奈 / 42歳', '鈴木 奈々 / 31歳', '高橋 絵里 / 38歳'];
+const VOICE_EMOJIS = ['🌸','🌿','🌼','🍀','🌺'];
+
+const FAQS = [
+  { q:'初めて利用するのですが、どこから始めればいいですか？', a:'まずは無料カウンセリングからお始めください。専任スタッフがお肌の状態や目標をお聞きし、最適なスタートプランをご提案します。特別な準備は必要ありません。' },
+  { q:'肌が敏感でも使えますか？', a:'はい、もちろんです。全製品は皮膚科テスト済みで、アレルギーテストを実施しています。ご不安な場合は、カウンセリング時に肌状態を詳しくお知らせください。パッチテスト用のサンプルもご用意しています。' },
+  { q:'解約はいつでもできますか？', a:'いつでも解約可能です。解約手数料や違約金は一切かかりません。マイページまたはカスタマーサポートへのご連絡で、最短当日に手続きが完了します。' },
+  { q:'効果が出るまでどれくらいかかりますか？', a:'個人差はありますが、多くのお客様が2〜4週間で肌の変化を実感されています。より本質的な変化は3ヶ月程度でご実感いただける場合が多いです。定期的なフォローアップで経過を確認しながら進めます。' },
+  { q:'定期便のお届け頻度は変更できますか？', a:'はい、1ヶ月・2ヶ月・3ヶ月の間隔からお選びいただけます。マイページからいつでも変更可能で、次回お届け予定日の3日前まで変更・スキップができます。' },
+];
+
+// ═══════════════════════════════
+//  BUILD SIDEBAR
+// ═══════════════════════════════
+function buildSidebar() {
+  const cg = document.getElementById('colorGrid');
+  COLOR_PRESETS.forEach((p,i) => {
+    const el = document.createElement('div');
+    el.className = 'cp' + (i===0?' active':'');
+    el.onclick = () => selectColor(i);
+    const grad = p.heroGrad.replace(/['"]/g,'');
+    el.innerHTML = `
+      <div class="cp-inner">
+        <div class="cp-swatch" style="background:${p.heroGrad}"></div>
+        <div class="cp-swatch" style="background:${p.accent};flex:0.45"></div>
+        <div class="cp-swatch" style="background:${p.card};flex:0.45"></div>
+      </div>
+      <div class="cp-name">${p.name}</div>`;
+    cg.appendChild(el);
+  });
+
+  const fl = document.getElementById('fontList');
+  FONT_PRESETS.forEach((p,i) => {
+    const el = document.createElement('div');
+    el.className = 'fp' + (i===0?' active':'');
+    el.onclick = () => selectFont(i);
+    el.innerHTML = `
+      <div class="fp-text" style="font-family:${p.display};font-style:${p.italic?'italic':'normal'};font-weight:${p.light?'200':'400'}">${p.name}</div>
+      <div class="fp-meta">${p.sub}</div>`;
+    fl.appendChild(el);
+  });
+
+  const ag = document.getElementById('animGrid');
+  ANIM_PRESETS.forEach((p,i) => {
+    const el = document.createElement('div');
+    el.className = 'ap' + (i===0?' active':'');
+    el.onclick = () => selectAnim(i);
+    el.innerHTML = `<div class="ap-icon">${p.icon}</div><div class="ap-name">${p.name}</div>`;
+    ag.appendChild(el);
+  });
+}
+
+function selectColor(i) {
+  ci = i;
+  document.querySelectorAll('.cp').forEach((el,j) => el.classList.toggle('active', i===j));
+  renderLP();
+}
+function selectFont(i) {
+  fi = i;
+  document.querySelectorAll('.fp').forEach((el,j) => el.classList.toggle('active', i===j));
+  renderLP();
+}
+function selectAnim(i) {
+  ai = i;
+  document.querySelectorAll('.ap').forEach((el,j) => el.classList.toggle('active', i===j));
+  renderLP();
+}
+function setDevice(mode, btn) {
+  document.querySelectorAll('.db').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('lpFrame').classList.toggle('mobile', mode === 'mobile');
+}
+function hardRefresh() {
+  const c = document.getElementById('lpContent');
+  c.style.opacity = '0';
+  c.style.transition = 'opacity .25s';
+  setTimeout(() => { renderLP(); c.style.opacity = '1'; }, 280);
+}
+
+// ═══════════════════════════════
+//  RENDER LP
+// ═══════════════════════════════
+function renderLP() {
+  const C = COLOR_PRESETS[ci];
+  const F = FONT_PRESETS[fi];
+  const A = ANIM_PRESETS[ai];
+  const lp = LP_COPY[ci % LP_COPY.length];
+  const feats = FEATURES[ci % FEATURES.length];
+  const steps = STEPS[ci % STEPS.length];
+  const animCls = A.id !== 'none' ? `anim-${A.id}` : '';
+  const isDark = !!C.dark;
+  const textOp = isDark ? 'rgba(234,232,228,0.72)' : `${C.text}bb`;
+
+  const starsHtml = (n=5) => '★'.repeat(n)+'☆'.repeat(5-n);
+
+  // Feature cards
+  const featCards = feats.map((f,i) => `
+    <div class="feature-item" style="background:${C.card};border:1px solid ${C.cardBorder}">
+      <div class="feature-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="feature-content">
+        <div class="feature-h" style="font-family:${F.heading};color:${C.text}">${f.h}</div>
+        <div class="feature-p">${f.p}</div>
+      </div>
+    </div>`).join('');
+
+  // Carousel cards
+  const carouselCards = [
+    { icon:'🌿', tag:'BEST SELLER', title:isDark?'ナイトクリーム':'モイスチャークリーム', desc:'うるおいを長時間キープ。寝ている間に集中ケア。' },
+    { icon:'🌸', tag:'NEW', title:'エッセンスセラム', desc:'美肌成分を高濃度配合した贅沢な美容液。' },
+    { icon:'✨', tag:'POPULAR', title:isDark?'グロウマスク':'クレイマスク', desc:'週1回のスペシャルケアで、ワントーン明るい肌へ。' },
+    { icon:'🍃', tag:'LIMITED', title:'ヘアトリートメント', desc:'補修成分が髪の芯まで浸透。サロン級の仕上がり。' },
+  ].map((c,i) => `
+    <div class="carousel-card" style="background:${C.card};border:1px solid ${C.cardBorder}">
+      <div class="card-img" style="background:${C.heroGrad}">
+        <span style="font-size:52px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.1))">${c.icon}</span>
+      </div>
+      <div class="card-body" style="background:${C.card}">
+        <div class="card-tag" style="color:${C.accent}">${c.tag}</div>
+        <div class="card-title" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">${c.title}</div>
+        <div class="card-desc" style="color:${C.text}">${c.desc}</div>
+      </div>
+    </div>`).join('');
+
+  // Voice cards
+  const voiceCards = VOICES.map((v,i) => `
+    <div class="voice-card" style="background:${C.card};border:1px solid ${C.cardBorder}">
+      <div class="voice-stars" style="color:${C.accent}">${starsHtml(5)}</div>
+      <div class="voice-text" style="color:${C.text};font-family:${F.heading};font-weight:300">${v}</div>
+      <div class="voice-author">
+        <div class="voice-avatar" style="background:${C.heroGrad};border:1px solid ${C.cardBorder}">${VOICE_EMOJIS[i]}</div>
+        <div>
+          <div class="voice-name" style="color:${C.text}">${VOICE_NAMES[i]}</div>
+          <div class="voice-meta" style="color:${C.text}">会員 ${i+1}年目</div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Steps
+  const stepsList = steps.map((s,i) => `
+    <div class="step-item" style="color:${C.text}">
+      <div class="step-circle" style="background:${C.accentBg};color:${C.accentText}">${i+1}</div>
+      <div class="step-body">
+        <div class="step-h" style="font-family:${F.heading};font-weight:${F.light?'200':'400'}">${s.h}</div>
+        <div class="step-p">${s.p}</div>
+      </div>
+    </div>`).join('');
+
+  // Price cards - popular highlighted by border + badge, keeping same bg
+  const priceData = [
+    { plan:'LIGHT', price:'3,980', unit:'/月', desc:'初めての方に最適。基本的なスキンケアアイテムをお試しいただけます。', features:['月1回のカウンセリング','厳選3アイテム','会員専用コンテンツ'], badge:null },
+    { plan:'STANDARD', price:'7,480', unit:'/月', desc:'人気No.1プラン。スキンケアを本格的に始めたい方に。', features:['月2回のカウンセリング','厳選5アイテム','優先サポート','限定イベント招待'], badge:'POPULAR' },
+    { plan:'PREMIUM', price:'14,800', unit:'/月', desc:'最上級の体験をすべて。肌を根本から変えたい方へ。', features:['無制限カウンセリング','フルラインアップ','専任スタイリスト','先行発売アクセス'], badge:null },
+  ];
+  const priceCds = priceData.map(p => {
+    const isPopular = !!p.badge;
+    const cardBg = C.card;
+    const cardBorder = isPopular ? `2px solid ${C.accent}` : `1px solid ${C.cardBorder}`;
+    const shadow = isPopular ? `0 8px 32px ${C.accent}28` : 'none';
+    return `
+    <div class="price-card${isPopular?' popular':''}" style="background:${cardBg};color:${C.text};border:${cardBorder};box-shadow:${shadow}">
+      ${isPopular ? `<div class="price-badge" style="background:${C.accent}20;color:${C.accent};border:1px solid ${C.accent}55">${p.badge}</div>` : ''}
+      <div class="price-plan" style="color:${C.accent}">${p.plan}</div>
+      <div class="price-amount" style="font-family:${F.heading}"><sup>¥</sup>${p.price}<sub>${p.unit}</sub></div>
+      <div class="price-desc">${p.desc}</div>
+      <ul class="price-features">
+        ${p.features.map(f=>`<li style="color:${C.text}">${f}</li>`).join('')}
+      </ul>
+      <button class="btn-primary" style="background:${isPopular?C.accentBg:C.card};color:${isPopular?C.accentText:C.accent};border:1px solid ${C.accent};font-family:${F.body};width:100%">プランを選ぶ</button>
+    </div>`}).join('');
+
+  // FAQ items
+  const faqItems = FAQS.map((f,i) => `
+    <div class="faq-item" style="border-color:${C.cardBorder}">
+      <button class="faq-q" style="color:${C.text};font-family:${F.body}" onclick="toggleFaq(this)">
+        <span>${f.q}</span>
+        <span class="faq-icon" style="background:${C.card};color:${C.accent}">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner" style="color:${C.text}">${f.a}</div>
+      </div>
+    </div>`).join('');
+
+  const navBg = `style="background:${C.nav};border-bottom:1px solid ${isDark?'rgba(255,255,255,0.06)':C.cardBorder}"`;
+  const heroAnimCls = A.id === 'gradient' ? 'anim-gradient' : '';
+
+  document.getElementById('lpContent').innerHTML = `
+<div class="lp-wrap" style="background:${C.bg};color:${C.text};font-family:${F.body}">
+
+  <!-- NAV -->
+  <nav class="lp-nav" ${navBg}>
+    <div class="lp-inner" style="display:flex;align-items:center;justify-content:space-between;width:100%">
+      <div class="lp-nav-logo" style="font-family:${F.heading};color:${C.text}">${lp.brand}</div>
+      <div class="hamburger" style="color:${C.text}">
+        <span></span><span></span><span style="width:70%"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="lp-hero ${animCls} ${heroAnimCls}" style="background:${C.heroGrad}">
+    <div class="lp-inner">
+      <div class="hero-badge" style="background:${C.badge};border:1px solid ${C.badgeBorder};color:${C.accent}">
+        ${lp.tagline}
+      </div>
+      <h1 class="hero-h1" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">${lp.h1}</h1>
+      <p class="hero-p" style="color:${C.text}">${lp.sub}</p>
+      <div class="hero-actions">
+        <button class="btn-primary" style="background:${C.accentBg};color:${C.accentText};font-family:${F.body}">${lp.cta1}</button>
+        <button class="btn-ghost" style="border:1px solid ${C.cardBorder};color:${C.text};font-family:${F.body}">${lp.cta2}</button>
+      </div>
+    </div>
+    <div class="hero-scroll" style="color:${C.text}">
+      <div class="scroll-line"></div>
+      SCROLL
+    </div>
+    <!-- BG Deco -->
+    <div style="position:absolute;top:-80px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,${C.deco1}60,transparent 70%);pointer-events:none;z-index:0"></div>
+    <div style="position:absolute;bottom:-60px;left:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,${C.deco2}30,transparent 70%);pointer-events:none;z-index:0"></div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar" style="background:${C.card};border-bottom:1px solid ${C.cardBorder}">
+    <div class="lp-inner" style="display:flex;align-items:center;justify-content:space-between;width:100%">
+      ${[['98%','顧客満足度'],['15,000+','会員数'],['4.9','星評価'],['30日','全額返金']].map((t,i,arr) =>
+        `<div class="trust-item" style="color:${C.text}">
+          <span class="trust-num" style="font-family:${F.heading}">${t[0]}</span>
+          <span class="trust-label">${t[1]}</span>
+        </div>${i<arr.length-1?`<div class="trust-divider" style="background:${C.text}"></div>`:''}`
+      ).join('')}
+    </div>
+  </div>
+
+  <!-- CONCEPT -->
+  <section class="lp-concept">
+    <div class="lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">OUR CONCEPT</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">${lp.concept_h}</h2>
+      <p class="concept-body" style="color:${C.text}">${lp.concept_p}</p>
+      <button class="btn-ghost" style="border:1px solid ${C.accent};color:${C.accent};font-family:${F.body}">ブランドストーリーを読む →</button>
+      <div class="concept-img-placeholder" style="background:${C.heroGrad}">
+        <span>🌿</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAROUSEL: PRODUCTS -->
+  <section class="lp-carousel-section">
+    <div class="carousel-header lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">PRODUCTS</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">人気アイテム</h2>
+    </div>
+    <div class="carousel-track-wrap" id="carouselWrap">
+      <div class="carousel-track" id="carouselTrack">${carouselCards}</div>
+    </div>
+    <div class="carousel-dots lp-inner" id="carouselDots" style="color:${C.text}"></div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="lp-features">
+    <div class="lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">FEATURES</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">選ばれる3つの理由</h2>
+      <div class="features-list">${featCards}</div>
+    </div>
+  </section>
+
+  <!-- STEPS: HOW IT WORKS -->
+  <section class="lp-steps" style="background:${C.card}">
+    <div class="lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">HOW IT WORKS</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">始め方はカンタン</h2>
+      <div class="steps-list" style="color:${C.text}">${stepsList}</div>
+    </div>
+  </section>
+
+  <!-- VOICES CAROUSEL -->
+  <section class="lp-voices">
+    <div class="voice-header lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">VOICE</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">お客様の声</h2>
+    </div>
+    <div class="voice-track-wrap" id="voiceWrap">
+      <div class="voice-track" id="voiceTrack">${voiceCards}</div>
+    </div>
+    <div class="carousel-dots lp-inner" id="voiceDots" style="color:${C.text}"></div>
+  </section>
+
+  <!-- PRICE -->
+  <section class="lp-price" style="background:${C.card}">
+    <div class="lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">PLAN & PRICE</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">プランを選ぶ</h2>
+      <div class="price-cards">${priceCds}</div>
+      <p style="font-size:11px;opacity:0.5;margin-top:16px;text-align:center;color:${C.text}">すべてのプランは30日間全額返金保証付き</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="lp-faq">
+    <div class="lp-inner">
+      <div class="eyebrow" style="color:${C.accent}">FAQ</div>
+      <h2 class="section-h2" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">よくある質問</h2>
+      <div class="faq-list" style="border-color:${C.cardBorder}">${faqItems}</div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="lp-cta-band" style="background:${C.heroGrad}">
+    <div class="cta-band-deco" style="background:radial-gradient(circle,${C.deco1},transparent);top:-80px;left:50%;transform:translateX(-50%)"></div>
+    <div class="lp-inner">
+      <div class="cta-band-eyebrow" style="color:${C.accent}">GET STARTED</div>
+      <h2 class="cta-band-h" style="font-family:${F.heading};color:${C.text};font-weight:${F.light?'200':'400'}">今すぐ、始めよう</h2>
+      <p class="cta-band-p" style="color:${C.text}">初回限定の無料カウンセリングで、あなただけのプランをご提案。まずは気軽にご相談ください。</p>
+      <div class="cta-band-actions">
+        <button class="btn-white" style="background:${C.accentBg};color:${C.accentText};font-family:${F.body}">無料カウンセリングを予約</button>
+        <button class="btn-outline-white" style="border:1px solid ${C.accent};color:${C.accent};font-family:${F.body}">サービス概要を見る</button>
+      </div>
+      <p class="guarantee" style="color:${C.text}">✓ 30日間全額返金保証 &nbsp;✓ いつでも解約可能 &nbsp;✓ 初回無料</p>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <div class="lp-press" style="background:${C.card}">
+    <div class="lp-inner">
+      <div class="press-label" style="color:${C.text}">FEATURED IN</div>
+      <div class="press-logos">
+        ${['VOGUE','ELLE','Harper\'s BAZAAR','Numero','CLASSY'].map(n=>`<div class="press-logo" style="color:${C.text}">${n}</div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="lp-footer" style="background:${isDark?'#0c0e10':C.bg};border-top:1px solid ${C.cardBorder}">
+    <div class="lp-inner" style="display:flex;flex-direction:column;gap:24px;width:100%">
+      <div>
+        <div class="footer-brand" style="font-family:${F.heading};color:${C.text}">${lp.brand}</div>
+        <div class="footer-desc" style="color:${C.text}">美しさの本質を追求し、あなたの輝きをサポートします。</div>
+      </div>
+      <div class="footer-links">
+        ${['プライバシーポリシー','特定商取引法','利用規約','会社情報','お問い合わせ'].map(l=>`<a class="footer-link" style="color:${C.text}" href="#">${l}</a>`).join('')}
+      </div>
+      <div class="footer-bottom" style="border-color:${C.cardBorder};color:${C.text}">
+        <span>© 2025 ${lp.brand}. All rights reserved.</span>
+        <span>Made with ✦</span>
+      </div>
+    </div>
+  </footer>
+</div>`;
+
+  // Init carousels and accordions after render
+  initCarousel('carouselTrack', 'carouselDots', 4, C);
+  initCarousel('voiceTrack', 'voiceDots', 5, C);
+}
+
+// ═══════════════════════════════
+//  CAROUSEL LOGIC (scroll-snap)
+// ═══════════════════════════════
+function initCarousel(trackId, dotsId, count, C) {
+  const track = document.getElementById(trackId);
+  const dotsEl = document.getElementById(dotsId);
+  if (!track || !dotsEl) return;
+
+  let cur = 0;
+  let autoTimer = null;
+
+  // Create dots
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'cdot' + (i===0?' active':'');
+    d.onclick = () => scrollToCard(i);
+    dotsEl.appendChild(d);
+  }
+
+  function scrollToCard(i) {
+    cur = Math.max(0, Math.min(i, count-1));
+    const cards = track.querySelectorAll('.carousel-card, .voice-card');
+    if (!cards[cur]) return;
+    const cardLeft = cards[cur].offsetLeft - 24; // subtract padding
+    track.scrollTo({ left: cardLeft, behavior: 'smooth' });
+    updateDots(cur);
+  }
+
+  function updateDots(idx) {
+    dotsEl.querySelectorAll('.cdot').forEach((d,j) => d.classList.toggle('active', j===idx));
+  }
+
+  // Update dots on scroll
+  track.addEventListener('scroll', () => {
+    const cards = track.querySelectorAll('.carousel-card, .voice-card');
+    let closest = 0, minDist = Infinity;
+    cards.forEach((card, i) => {
+      const dist = Math.abs(card.offsetLeft - 24 - track.scrollLeft);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    if (closest !== cur) { cur = closest; updateDots(cur); }
+  }, { passive: true });
+
+  // Drag to scroll (mouse)
+  let isDragging = false, dragStartX = 0, dragStartScroll = 0;
+  track.addEventListener('mousedown', e => {
+    isDragging = true;
+    dragStartX = e.pageX;
+    dragStartScroll = track.scrollLeft;
+    track.style.scrollBehavior = 'auto';
+  });
+  track.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    e.preventDefault();
+    track.scrollLeft = dragStartScroll - (e.pageX - dragStartX);
+  });
+  const stopDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.scrollBehavior = '';
+    // snap to nearest
+    const cards = track.querySelectorAll('.carousel-card, .voice-card');
+    let closest = 0, minDist = Infinity;
+    cards.forEach((card, i) => {
+      const dist = Math.abs(card.offsetLeft - 24 - track.scrollLeft);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    scrollToCard(closest);
+  };
+  track.addEventListener('mouseup', stopDrag);
+  track.addEventListener('mouseleave', stopDrag);
+
+  // Auto play
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(() => scrollToCard((cur + 1) % count), 4500);
+  }
+  function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
+  startAuto();
+
+  const section = track.closest('.lp-carousel-section, .lp-voices');
+  section?.addEventListener('mouseenter', stopAuto);
+  section?.addEventListener('mouseleave', startAuto);
+  track.addEventListener('touchstart', stopAuto, { passive: true });
+}
+
+// ═══════════════════════════════
+//  COPY PALETTE
+// ═══════════════════════════════
+function copyPalette() {
+  const C = COLOR_PRESETS[ci];
+  const text = [
+    `/* ${C.name} */`,
+    `--color-bg:         ${C.bg};`,
+    `--color-text:       ${C.text};`,
+    `--color-accent:     ${C.accent};`,
+    `--color-accent-bg:  ${C.accentBg};`,
+    `--color-accent-text:${C.accentText};`,
+    `--color-card:       ${C.card};`,
+    `--color-border:     ${C.cardBorder};`,
+    `--color-deco-1:     ${C.deco1};`,
+    `--color-deco-2:     ${C.deco2};`,
+  ].join('\n');
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btnCopyPalette');
+    const icon = document.getElementById('copyPaletteIcon');
+    btn.classList.add('copied');
+    btn.lastChild.textContent = ' コピーしました ✓';
+    icon.textContent = '✓';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.lastChild.textContent = ' カラーコードをコピー';
+      icon.textContent = '⊞';
+    }, 2200);
+  });
+}
+
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.faq-a').style.maxHeight = '0';
+  });
+
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 40 + 'px';
+  }
+}
+
+// ═══════════════════════════════
+//  INIT
+// ═══════════════════════════════
+buildSidebar();
+renderLP();
+</script>
+</body>
+</html>
